@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'naver_crawler.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 FEED_FORMAT = "csv"
-FEED_URI = "url_list.csv"
+FEED_URI = "article_list.csv"
 FEED_EXPORT_ENCODING = "utf-8-sig"
 LOG_FILE = "naver_log_file.log"
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
