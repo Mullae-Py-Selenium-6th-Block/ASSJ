@@ -121,7 +121,7 @@ class NewsArticleSpider(scrapy.Spider):
     def start_requests(self):
 
         # 크롤링을 위해 뉴스 URL을 담은 CSV 파일을 불러와 데이터프레임 생성
-        news_df = pd.read_csv("/Users/jang-yunji/Desktop/Sesac-Project/final-project/ASSJ/crawler/news_article/naver_crawler/2015-2016.csv", header = 0, encoding = "utf-8-sig")
+        news_df = pd.read_csv("/Users/stillssi/Desktop/ASSJ/crawler/news_article/naver_news_url.csv", header = 0, encoding = "utf-8-sig")
 
         # for 반복문을 사용하여 데이터프레임의 각 행을 순회
         for idx in news_df.index:
@@ -134,7 +134,7 @@ class NewsArticleSpider(scrapy.Spider):
             yield scrapy.Request(url = url, callback = self.news_parser, headers = self.headers)
 
 
-    def news_parser(self, response, date):
+    def news_parser(self, response):
 
         # 현재 크롤링을 진행하고 있는 웹 페이지 주소를 출력
         url = response.url
@@ -148,8 +148,8 @@ class NewsArticleSpider(scrapy.Spider):
 
         # 뉴스 기사의 내용이 존재하는 두 가지 경우에 따라 내용을 가져와 할당
         if not response.css("#dic_area ::text").extract():
-            item["Content"] = "".join(response.css("#dic_area .article ::text").extract())
+            item["content"] = "".join(response.css("#dic_area .article ::text").extract())
         else:
-            item["Content"] = "".join(response.css("#dic_area ::text").extract())
+            item["content"] = "".join(response.css("#dic_area ::text").extract())
 
         yield item
