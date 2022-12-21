@@ -10,3 +10,8 @@ class NewsURLCrawlingItem(scrapy.Item):
     # 크롤링을 통해 저장할 뉴스사, 뉴스 웹 페이지 주소, 작성일자를 속성으로 정의
     news_url = scrapy.Field()
     date = scrapy.Field()
+
+class NewsArticleItem(scrapy.Item):
+    content = scrapy.Field()
+    title = scrapy.Field()
+    date = scrapy.Field()
