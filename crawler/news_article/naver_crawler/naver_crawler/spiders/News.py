@@ -121,13 +121,12 @@ class NewsArticleSpider(scrapy.Spider):
     def start_requests(self):
 
         # 크롤링을 위해 뉴스 URL을 담은 CSV 파일을 불러와 데이터프레임 생성
-        news_df = pd.read_csv("/Users/stillssi/Desktop/ASSJ/crawler/news_article/naver_news_url.csv", header = 0, encoding = "utf-8-sig")
+        news_df = pd.read_csv("/Users/stillssi/Desktop/ASSJ/crawler/news_article/news_url-1.csv", header = 0, encoding = "utf-8-sig")
 
         # for 반복문을 사용하여 데이터프레임의 각 행을 순회
         for idx in news_df.index:
 
             # 날짜, URL을 가져와 각 변수에 할당
-            date = news_df.loc[idx, "date"]
             url = news_df.loc[idx, "news_url"]
 
             # 결과 값 반환
