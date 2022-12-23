@@ -1,15 +1,11 @@
-# Define here the models for your spider middleware
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-
+# 필요한 패키지 불러오기
 from scrapy import signals
-
-# useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
+# ----------------------------------------------------------------------------------------------------
 
-class NaverCrawlerSpiderMiddleware:
+# NewsCrawlerMiddleware() 클래스 정의
+class NewsCrawlerMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
     # passed objects.
@@ -21,12 +17,16 @@ class NaverCrawlerSpiderMiddleware:
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
 
+    # ----------------------------------------------------------------------------------------------------
+
     def process_spider_input(self, response, spider):
         # Called for each response that goes through the spider
         # middleware and into the spider.
 
         # Should return None or raise an exception.
         return None
+
+    # ----------------------------------------------------------------------------------------------------
 
     def process_spider_output(self, response, result, spider):
         # Called with the results returned from the Spider, after
@@ -36,12 +36,16 @@ class NaverCrawlerSpiderMiddleware:
         for i in result:
             yield i
 
+    # ----------------------------------------------------------------------------------------------------
+
     def process_spider_exception(self, response, exception, spider):
         # Called when a spider or process_spider_input() method
         # (from other spider middleware) raises an exception.
 
         # Should return either None or an iterable of Request or item objects.
         pass
+
+    # ----------------------------------------------------------------------------------------------------
 
     def process_start_requests(self, start_requests, spider):
         # Called with the start requests of the spider, and works
@@ -52,11 +56,15 @@ class NaverCrawlerSpiderMiddleware:
         for r in start_requests:
             yield r
 
+    # ----------------------------------------------------------------------------------------------------
+
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
 
+# ----------------------------------------------------------------------------------------------------
 
-class NaverCrawlerDownloaderMiddleware:
+# NewsCrawlerDownloaderMiddleware() 클래스 정의
+class NewsCrawlerDownloaderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
@@ -67,6 +75,8 @@ class NaverCrawlerDownloaderMiddleware:
         s = cls()
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
+
+    # ----------------------------------------------------------------------------------------------------
 
     def process_request(self, request, spider):
         # Called for each request that goes through the downloader
@@ -80,6 +90,8 @@ class NaverCrawlerDownloaderMiddleware:
         #   installed downloader middleware will be called
         return None
 
+    # ----------------------------------------------------------------------------------------------------
+
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
 
@@ -88,6 +100,8 @@ class NaverCrawlerDownloaderMiddleware:
         # - return a Request object
         # - or raise IgnoreRequest
         return response
+
+    # ----------------------------------------------------------------------------------------------------
 
     def process_exception(self, request, exception, spider):
         # Called when a download handler or a process_request()
@@ -98,6 +112,8 @@ class NaverCrawlerDownloaderMiddleware:
         # - return a Response object: stops process_exception() chain
         # - return a Request object: stops process_exception() chain
         pass
+
+    # ----------------------------------------------------------------------------------------------------
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
