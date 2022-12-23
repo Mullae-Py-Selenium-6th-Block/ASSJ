@@ -134,7 +134,7 @@ class MultiCSVItemPipeline(object):
         """
 
         # 하나의 파일에 대해 내보내기를 하는 경우
-        if spider.name == "NaverNewsURLCrawler":
+        if spider.name == "NewsURLCrawler":
 
             # CSV 파일로 내보내기 종료
             self.exporter.finish_exporting()
@@ -152,7 +152,7 @@ class MultiCSVItemPipeline(object):
             [csv_file.close() for csv_file in self.files.values()]
 
             # 코멘트 크롤러의 경우 빈 CSV 파일을 제거하는 blank_file_remover() 함수 실행
-            if spider.name == "NaverNewsCommentCrawler":
+            if spider.name == "NewsCommentCrawler":
                 self.blank_file_remover()
 
     # ----------------------------------------------------------------------------------------------------
