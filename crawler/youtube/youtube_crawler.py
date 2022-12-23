@@ -148,7 +148,7 @@ class YoutubeURLCrawler:
 
     # ----------------------------------------------------------------------------------------------------
 
-def get_comment_info(self, year : int):
+def get_comment_info(year : int):
         '''
         video_id정보를 활용하여 유튜브 댓글 크롤링하는 함수\n
         기간을 정하면 그 기간내 영상정보 csv파일을 불러와 video_id를 이용해 댓글을 크롤링한다.\n
@@ -187,10 +187,13 @@ def get_comment_info(self, year : int):
                     comments.append([title, comment['textDisplay'], comment_pubished_at, comment['likeCount']])
                     # 대댓글이 있는 경우
                     if item['snippet']['totalReplyCount'] > 0:
-                        for reply_item in item['replies']['comments']:
-                            reply = reply_item['snippet']
-                            reply_published_at = reply['publishedAt'].split('T')[0]
-                            comments.append([title, reply['textDisplay'], reply_published_at, reply['likeCount']])
+                        try:
+                            for reply_item in item['replies']['comments']:
+                                reply = reply_item['snippet']
+                                reply_published_at = reply['publishedAt'].split('T')[0]
+                                comments.append([title, reply['textDisplay'], reply_published_at, reply['likeCount']])
+                        except:
+                            pass
             
                 if 'nextPageToken' in response:
                     response = api_obj.commentThreads().list(part='snippet,replies', videoId=video_id, pageToken=response['nextPageToken'], maxResults=100).execute()
@@ -198,12 +201,12 @@ def get_comment_info(self, year : int):
                     break
         
         comment_info = pd.DataFrame(comments, columns=['title', 'comment', 'publishedAt', 'likeCount'])
-        file_name = f'yotube_comments_{year}.csv'
+        file_name = f'youtube_comments_{year}.csv'
         comment_info.to_csv(PATH + file_name, encoding='utf-8')
 
         return comment_info
 
 # 해당 파일을 직접 실행하는 경우
-if __name__ == "main":
-    url_crawler = YoutubeURLCrawler("서울+아파트+가격", 2013, 2013)
+if __name__ == "__main__":
+    url_crawler = YoutubeURLCrawler("서울+아파트+가격", 2022, 2022)
     url_crawler.search()
