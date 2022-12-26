@@ -1,21 +1,18 @@
 # 필요한 패키지 불러오기
 import pandas as pd
-import os
-import time
 from selenium import webdriver
-
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-
+import time
+from selenium.webdriver.common.by import By
+import json
 from googleapiclient.discovery import build
+import os
 
 # ----------------------------------------------------------------------------------------------------
 
 # YoutubeURLCrawler() 클래스 정의
 class YoutubeURLCrawler:
-
-    # ----------------------------------------------------------------------------------------------------
 
     # __init__() 함수 정의
     def __init__(self, keyword : str, start_year : int, end_year : int):
@@ -39,22 +36,43 @@ class YoutubeURLCrawler:
     # search() 함수 정의
     def search(self):
         """
-        각 월별로 유튜브 동영상 ID(Video ID)를 크롤링해 연도별로 CSV 파일로 결과를 저장하는 함수입니다.
+        각 월별로 유튜브 동영상 ID(Video ID)를 크롤링해 연도별 CSV 파일로 결과를 저장하는 함수입니다.
         """
 
-        # 각 월별 
-        month_count = 0
+        # 각 연도를 12개월로 구분하기 위한 year_count 변수 초기화
+        year_count = 0
 
-        while month_count != len(self.after_list) // 12: 
-            
-            result_df = pd.DataFrame()
+        # 입력받은 검색 시작연도를 변수 year에 할당
+        year = self.start_year
 
-            for period in range(0 + (12 * x), 12 + (12* x)):
+        # 크롤링의 시작을 알리는 안내 메시지 출력
+        print(">>> 유튜브 동영상 ID 크롤링을 시작합니다.\n")
+
+        # while 반복문을 사용해 각 12개월을 순회
+        while year_count != len(self.after_list) // 12: 
+
+            # 크롤링한 결과를 담을 데이터프레임 result_df 초기화
+            result_df = pd.DataFrame(columns = ["Title", "VideoID"])
+
+            # for 반복문을 사용해 1년의 각 달을 순회
+            for period in range(0 + (12 * year_count), 12 + (12 * year_count)):
+
+                # video_id_collector() 함수를 호출해 크롤링한 결과를 데잍터프레임 temp_df에 할당
                 temp_df = self.video_id_collector(self.keyword, self.after_list[period], self.before_list[period])
+
+                # concat() 함수를 사용해 result_df에 temp_df를 병합
                 result_df = pd.concat([result_df, temp_df], axis = 0, ignore_index = True)
 
-            self.csv_saver(result_df)
-            x += 1
+                # 크롤링의 완료를 알리는 안내 메시지 출력
+                print(">>> {0}년 {1}월 유튜브 동영상 ID 크롤링이 완료되었습니다.\n".format(year, period % 12 + 1))
+
+            # csv_exporter() 함수를 호출해 해당 연도의 크롤링 결과를 CSV 파일로 저장하고 안내 메시지 출력
+            self.csv_exporter(result_df, year)
+            print(">>> {0}년 유튜브 동영상 ID 수집 결과가 CSV 파일로 저장되었습니다.\n".format(year))
+
+            # CSV 파일로 저장할 연도와 year_count 변수 각각 조정
+            year_count += 1
+            year += 1
 
     # ----------------------------------------------------------------------------------------------------
 
@@ -78,112 +96,227 @@ class YoutubeURLCrawler:
     def video_id_collector(self, keyword : str, after : str, before : str) -> pd.DataFrame:
         """
         유튜브(Youtube)에서 특정 기간 내에서 특정 검색어로 검색한 결과를 수집하는 함수입니다.\n
-        검색 결과로 나오는 모든 동영상의 제목과 URL로 사용되는 영상 ID(Video ID)를 크롤링해 판다스(pandas) 데이터프레임(Dataframe)을 반환합니다.\n
-
+        검색 결과로 나오는 모든 동영상의 제목과 URL로 사용되는 영상 ID(Video ID)를 크롤링해 판다스(pandas) 데이터프레임(Dataframe)을 반환합니다.
         """
 
         # 크롤링의 시작을 알리는 메시지를 출력
-        print(">>> [{0}]부터 [{1}]까지 검색어 [{2}]에 대한 유튜브 영상을 검색합니다.".format(after, before, keyword.replace("+", " ")))
+        print(">>> [{0}]부터 [{1}]까지 검색어 [{2}]에 대한 유튜브 영상을 검색합니다.\n".format(after, before, keyword.replace("+", " ")))
 
-
+        # 백그라운드 사용 및 불필요한 오류 메시지 출력 방지 설정
         options = webdriver.ChromeOptions()
+        options.add_argument("headless")
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
+        # 크롬(Chrome) 웹 드라이버를 변수 driver에 할당
         driver = webdriver.Chrome(options = options, service = ChromeService(ChromeDriverManager().install()))
 
+        # get() 메서드를 사용해 검색 결과 URL 웹 페이지를 불러오기
         driver.get("https://www.youtube.com/results?search_query={0}+after%3A{1}+before%3A{2}".format(keyword, after, before))
 
-        scroll_pane_height = driver.execute_script('return document.documentElement.scrollHeight')
-
-        # 무한 스크롤 시작
+        # while 반복문을 사용해 스크롤바를 계속해서 이동
         while True:
-            driver.execute_script('window.scrollTo(0,document.documentElement.scrollHeight)')
-            # 딜레이 생성
-            time.sleep(3)
-            new_scroll_pane_height = driver.execute_script('return document.documentElement.scrollHeight')
 
-            message = driver.find_element(By.XPATH, '//*[@id="message"]')
+            # execute_script() 메서드를 사용해 스크롤 바를 웹 페이지의 높이만큼 이동
+            driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight)")
 
-            if message.text == "결과가 더 이상 없습니다.":
-                print('결과가 더 이상 없습니다.')
+            # sleep() 함수를 사용해 2초간 시간 지연으로 웹 드라이버가 새 목록을 불러올 시간 확보
+            time.sleep(2)
+
+            # find_element() 메서드를 사용해 더 이상 검색 결과가 없음을 알려주는 메시지를 변수 end_message에 할당
+            end_message = driver.find_element(By.ID, "message")
+
+            # 더 이상 결과가 없음을 알려주는 메시지가 나타난 경우 안내 메시지 출력 후 스크롤 중단
+            if end_message.text == "결과가 더 이상 없습니다.":
+                print(">>> 검색 결과를 모두 불러왔습니다.\n")
                 break
-
-            scroll_pane_height = new_scroll_pane_height
         
-        datas = driver.find_elements(By.XPATH, r'//*[@id="video-title"]')
+        # find_elements() 메서드를 사용해 동영상 목록을 추출하고 video_list에 할당
+        video_list = driver.find_elements(By.ID, "video-title")
 
-        videos = []
-        for data in datas:
-            url = data.get_attribute('href')
-            title = data.text
+        # 추출한 결과를 저장할 리스트 result 초기화
+        result = []
+
+        # for 반복문을 사용해 동영상 목록의 각 동영상 순회
+        for video in video_list:
+
+            # 동영상 제목과 ID를 추출해 각 변수에 할당
+            video_title = video.text
+            video_url = video.get_attribute("href")
             
-            if url == None:
-                pass
-            # 쇼츠 동영상 제외
-            elif 'shorts' in url:
-                pass
-            else:
-                # api 사용을 위해 videoId만 저장
-                videos.append([title, url.split('=')[1]])
-        driver.close()
-        video_info = pd.DataFrame(videos, columns=['title', 'videoId'])
+            # URL이 존재하지 않는 경우 해당 동영상을 제외
+            if video_url == None: continue
 
-        return video_info
+            # 유튜브 쇼츠(Youtube Shorts) 동영상을 제외
+            if "shorts" in video_url: continue
+        
+            # append() 메서드를 사용해 동영상 제목과 ID를 리스트에 추가
+            result.append([video_title, video_url.split("=")[1]])
+
+        # 동영상 제목과 ID를 데이터프레임으로 변환해 result_df에 할당
+        result_df = pd.DataFrame(result, columns = ["Title", "VideoID"])
+
+        # close() 메서드를 사용해 크롬 웹 드라이버를 종료
+        driver.close()
+
+        # 결과 값 반환
+        return result_df
+
+    # ----------------------------------------------------------------------------------------------------
+
+    # csv_exporter() 함수 정의
+    def csv_exporter(self, result_df : pd.DataFrame, year : int):
+        """
+        동영상 ID(Video ID)가 담긴 데이터프레임을 CSV 파일로 저장하는 함수입니다.\n
+        저장되는 CSV 파일의 이름은 'youtube_url_특정연도.csv'입니다.
+        """
+
+        # CSV 파일을 저장할 경로를 export_dir에 할당
+        export_dir = "./../../data/"
+
+        # to_csv() 메서드를 사용해 데이터프레임을 CSV 파일로 저장
+        result_df.to_csv(export_dir + f"youtube_url_{year}.csv", index = False, encoding = "utf-8-sig")
 
 # ----------------------------------------------------------------------------------------------------
 
-def get_comment_info(after: str, before: str):
-    '''
-    video_id정보를 활용하여 유튜브 댓글 크롤링하는 함수\n
-    기간을 정하면 그 기간내 영상정보 csv파일을 불러와 video_id를 이용해 댓글을 크롤링한다.\n
-    유튜브 api를 사용하여 댓글 정보 크롤링 데이터프레임을 반환하고 csv로 저장한다.
-    '''
+# YoutubeCommentCrawler() 클래스 정의
+class YoutubeCommentCrawler:
 
-    comments = list()
+    # __init__() 함수 정의
+    def __init__(self, start_year : int, end_year : int):
+        """
+        검색할 기간을 입력받아 CSV 파일로 저장된 동영상 주소에서 유튜브 댓글 크롤링을 수행하는 클래스 객체입니다.\n
+        - [인수 ①] start_year: 검색할 기간의 시작연도, 'yyyy'의 형식으로 입력 (예) 2013\n
+        - [인수 ②] end_year: 검색할 기간의 종료연도, 'yyyy'의 형식으로 입력 (예) 2022
+        """
 
-    # API키 config파일에서 불러오기
-    # developerKey=APIKey (따옴표 없이 저장)
-    with open('./.config', 'r') as f:
-        for l in f.readlines():
-            devloperKey = l.split('=')[1]
+        # 입력 받은 댓글을 가져올 시작연도와 종료연도를 각 속성에 저장
+        self.start_year = start_year
+        self.end_year = end_year
 
-    api_obj = build('youtube', 'v3', developerKey=devloperKey)
+    # ----------------------------------------------------------------------------------------------------
 
-    # csv파일 불러오기
-    file = r'youtube_videos{0}~{1}.csv'.format(after, before)
-    if os.path.isfile(file):
-        video_info = pd.read_csv(file)
-    else:
-        print('Nothing in directory. Please check the file name.')
-    
-    for title, video_id in zip(video_info['title'], video_info['videoId']):
-        try:
-            response = api_obj.commentThreads().list(part='snippet,replies', videoId=video_id, maxResults=100).execute()
-        except: # 댓글 중지 상태인 경우
-            continue # 다음 비디오로 넘어가야 함
-        while response:
-            for item in response['items']:
-                comment = item['snippet']['topLevelComment']['snippet']
-                comments.append([title, comment['textDisplay'], comment['authorDisplayName'], comment['publishedAt'], comment['likeCount']])
-                # 대댓글이 있는 경우
-                if item['snippet']['totalReplyCount'] > 0:
-                    for reply_item in item['replies']['comments']:
-                        reply = reply_item['snippet']
-                        comments.append([title, reply['textDisplay'], reply['authorDisplayName'], reply['publishedAt'], reply['likeCount']])
+    # get() 함수 정의
+    def get(self):
+        """
+        각 연도별로 유튜브 동영상 댓글을 크롤링해 CSV 파일로 결과를 저장하는 함수입니다.
+        """
+
+        # 크롤링의 시작을 알리는 안내 메시지 출력
+        print(">>> 유튜브 댓글 크롤링을 시작합니다.\n")
+
+        # for 반복문을 사용해 시작연도부터 종료연도까지 순회
+        for year in range(self.start_year, self.end_year + 1):
+
+            # comment_collector() 함수를 호출해 크롤링한 결과를 데이터프레임 result_df에 할당
+            result_df = self.comment_collector(year)
+
+            # 크롤링의 완료를 알리는 안내 메시지 출력
+            print(">>> {0}년 유튜브 댓글 크롤링이 완료되었습니다.\n".format(year))
+
+            # csv_exporter() 함수를 호출해 해당 연도의 크롤링 결과를 CSV 파일로 저장하고 안내 메시지 출력
+            self.csv_exporter(result_df, year)
+            print(">>> {0}년 유튜브 댓글 수집 결과가 CSV 파일로 저장되었습니다.\n".format(year))
+
+    # ----------------------------------------------------------------------------------------------------
+
+    # comment_collector() 함수 정의
+    def comment_collector(self, year : int) -> pd.DataFrame:
+        """
+        동영상 ID(Video ID)가 저장된 CSV 파일정보를 활용하여 유튜브 댓글을 크롤링하는 함수입니다.\n
+        YouTube Data API를 사용하여 각 동영상의 댓글을 수집한 결과를 담은 판다스(pandas) 데이터프레임(Dataframe)을 반환합니다.
+        """
+
+        # API 키(Key)를 api_config.json 파일에서 가져와 api_key 변수에 할당
+        with open("./api_config.json", "r") as file:
+            data = json.load(file)
+            api_key = data["API-KEY"]
+
+        # build() 함수를 사용해 API 객체를 youtube_api에 할당
+        youtube_api = build(serviceName = "youtube", version = "v3", developerKey = api_key)
+
+        # CSV 파일을 불러올 경로를 import_dir에 할당
+        import_dir = "./../../data/"
+
+        # 동영상 ID가 담긴 CSV 파일이 존재하는 경우 불러와 데이터프레임 video_df에 할당
+        if os.path.isfile(import_dir + f"youtube_url_{year}.csv"):
+            video_df = pd.read_csv(import_dir + f"youtube_url_{year}.csv", header = 0, encoding = "utf-8-sig")
         
-            if 'nextPageToken' in response:
-                response = api_obj.commentThreads().list(part='snippet,replies', videoId=video_id, pageToken=response['nextPageToken'], maxResults=100).execute()
-            else:
-                break
-    
-    comment_info = pd.DataFrame(comments, columns=['title', 'comment', 'author', 'publishedAt', 'likeCount'])
-    PATH = r'yotube_comments{0}~{1}.csv'.format(after, before)
-    comment_info.to_csv(PATH, encoding='utf-8')
+        # 동영상 ID가 담긴 CSV 파일이 존재하지 않는 경우 오류 메시지 출력
+        else:
+            raise Exception(">>> 동영상 ID가 담긴 CSV 파일이 존재하지 않습니다. 먼저 동영상 ID 크롤링을 수행했는지 확인해 주십시오.\n")
 
-    return comment_info
+        # 추출한 결과를 저장할 리스트 result 초기화
+        result = []
+
+        # for 반복문을 사용해 video_df의 각 행을 순회
+        for title, video_id in zip(video_df["Title"], video_df["VideoID"]):
+
+            # 댓글 사용 중지 상태가 아닌 경우 commentThreads().list() 메서드를 사용해 댓글 목록을 가져와 response에 할당
+            try: response = youtube_api.commentThreads().list(part = "snippet,replies", videoId = video_id, maxResults = 100).execute()
+
+            # 댓글 사용 중지 상태인 경우 다음 동영상으로 이동
+            except: continue
+
+            # while 반복문을 사용해 댓글 목록을 100개씩 차례로 순회
+            while response:
+
+                # for 반복문을 사용해 각 아이템을 순회하며 영상 제목, 댓글 내용, 댓글 작성시간, 좋아요 수를 추출해 리스트 result에 추가
+                for item in response["items"]:
+                    content = item["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
+                    writed_at = item["snippet"]["topLevelComment"]["snippet"]["publishedAt"].split("T")[0]
+                    like_count = item["snippet"]["topLevelComment"]["snippet"]["likeCount"]
+                    result.append([title, content, writed_at, like_count])
+
+                    # 댓글의 댓글이 존재하는 경우 영상 제목, 댓글 내용, 댓글 작성시간, 좋아요 수를 추출해 리스트 result에 추가
+                    if "replies" in item.keys():
+                        for reply_item in item["replies"]["comments"]:
+                            reply_content = reply_item["snippet"]["textDisplay"]
+                            reply_writed_at = reply_item["snippet"]["publishedAt"].split("T")[0]
+                            reply_like_count = reply_item["snippet"]["likeCount"]
+                            result.append([title, reply_content, reply_writed_at, reply_like_count])
+
+                # 다음 페이지가 존재하는 경우, 다음 페이지를 호출해 response에 할당            
+                if "nextPageToken" in response:
+                    response = youtube_api.commentThreads().list(
+                        part = "snippet,replies",
+                        videoId = video_id,
+                        pageToken = response["nextPageToken"],
+                        maxResults = 100
+                    ).execute()
+
+                # 다음 페이지가 존재하지 않는 경우 while 반복문 탈출
+                else: break
+        
+        # 동영상 제목과 댓글 내용, 댓글 작성일자, 댓글 좋아요 수를 데이터프레임으로 변환해 result_df에 할당
+        result_df = pd.DataFrame(result, columns = ["Title", "Content", "WritedAt", "LikeCount"])
+
+        # 결과 값 반환
+        return result_df
+
+    # ----------------------------------------------------------------------------------------------------
+
+    # csv_exporter() 함수 정의
+    def csv_exporter(self, result_df : pd.DataFrame, year : int):
+        """
+        유튜브 댓글이 담긴 데이터프레임을 CSV 파일로 저장하는 함수입니다.\n
+        저장되는 CSV 파일의 이름은 'youtube_comment_특정연도.csv'입니다.
+        """
+
+        # CSV 파일을 저장할 경로를 export_dir에 할당
+        export_dir = "./../../data/"
+
+        # to_csv() 메서드를 사용해 데이터프레임을 CSV 파일로 저장
+        result_df.to_csv(export_dir + f"youtube_comment_{year}.csv", index = False, encoding = "utf-8-sig")
 
 # ----------------------------------------------------------------------------------------------------
 
 # 해당 파일을 직접 실행하는 경우
-if __name__ == "main":
-    url_crawler = YoutubeURLCrawler("서울+아파트+가격", 2013, 2013)
+if __name__ == "__main__":
+
+    # search() 메서드를 사용해 URL을 담은 CSV 파일을 생성
+    url_crawler = YoutubeURLCrawler("서울+아파트+가격", 2013, 2022)
     url_crawler.search()
+
+    # get() 메서드를 사용해 댓글을 담은 CSV 파일을 생성
+    comment_crawler = YoutubeCommentCrawler(2013, 2022)
+    comment_crawler.get()
