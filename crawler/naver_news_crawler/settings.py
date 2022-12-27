@@ -15,7 +15,7 @@ ITEM_PIPELINES = {
    "naver_news_crawler.pipelines.MultiCSVItemPipeline": 100
 }
 
-# 웹 사이트에서 각 값을 다운로드를 위해 대기할 시간을 설정
+# 웹 사이트에서 각 값을 가져오기 위해 대기할 시간을 설정
 DOWNLOAD_DELAY = 0.15
 
 # 로그 파일을 생성 및 덮어쓰기 설정
