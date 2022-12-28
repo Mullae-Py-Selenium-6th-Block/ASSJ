@@ -79,6 +79,21 @@ class CommentPreprocessor:
         CSV 파일로부터 불러온 raw_data 속성 값을 활용해 전처리 작업을 수행하고 CSV 파일로 저장하는 함수입니다.
         """
 
+        # 유튜브 댓글인 경우
+        if self.category == "youtube":
+
+            # 서울 아파트 가격과 무관한 동영상의 인덱스를 unrelated_index에 할당
+            unrelated_index = self.raw_data[self.raw_data["Title"].str.contains("서울|집|아파트|가격|값|부동산") == False].index
+            
+            # drop() 메서드를 사용해 무관한 동영상의 인덱스를 삭제
+            self.raw_data.drop(unrelated_index, axis = 0, inplace = True)
+
+            # reset_index() 메서드를 사용해 데이터프레임의 인덱스 재정렬
+            self.raw_data.reset_index(inplace = True)
+
+            # 불필요한 내용이 포함된 제목을 지닌 동영상 제거 작업 수행 후 안내 메시지 출력
+            print(">>> 분석과 관련 없는 동영상의 댓글이 제거되었습니다.\n")
+
         # 전처리된 결과를 담을 preprocessed_data 데이터프레임 초기화
         preprocessed_data = self.raw_data.copy()
 
