@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Logo from "../../img/Logo.png";
 import "./Sidebar.css";
 import pic from "./yoon.png";
-import { SidebarData } from "../../Data/Data";
+import { SidebarData } from "../../React_Data/Data";
 
 const Sidebar = () => {
   const [selected, setSelected] = useState(0);
