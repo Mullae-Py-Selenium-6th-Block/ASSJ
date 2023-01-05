@@ -1,5 +1,5 @@
 import "./SelectButton.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const SelectButton = () => {
   let data = [
@@ -39,19 +39,20 @@ const SelectButton = () => {
   };
 
   return (
-    <div class="select-menu">
+    <div className="select-menu">
       <div id="map-logo">
-        <i class="fa-solid fa-map-location-dot fa-2xl"></i>
+        <i className="fa-solid fa-map-location-dot fa-2xl"></i>
       </div>
       <div id="set">
-        <div class="select-box">
-          <span class="jachigu">확인하고 싶은 자치구를 선택하세요.</span>
-          <span class="ganada">(가나다 순)</span>
+        <div className="select-box">
+          <span className="jachigu">확인하고 싶은 자치구를 선택하세요.</span>
+          <span className="ganada">(가나다 순)</span>
         </div>
         <div className="container">
           {data.map((item, idx) => {
             return (
               <button
+                key={idx}
                 value={idx}
                 className={"btn" + (idx == btnActive ? " active" : "")}
                 onClick={toggleActive}
