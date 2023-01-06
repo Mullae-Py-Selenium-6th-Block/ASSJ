@@ -30,3 +30,9 @@
  overflow: hidden;
  grid-template-columns: 15rem auto;
 }
+
+#mapContainer {
+  display: flex;
+  justify-content: center;
+  margin: 18px;
+}
