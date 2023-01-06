@@ -7,6 +7,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Web from "./Pages/Web";
 
 function App() {
+  const url = "http://localhost:8000/assj/";
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => console.log(data));
   const [selectedGu, setSelectedGu] = useState(-1);
   return (
     <BrowserRouter>
