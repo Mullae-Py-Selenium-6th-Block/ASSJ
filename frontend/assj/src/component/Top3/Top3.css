@@ -1,0 +1,8 @@
+.Top3 {
+ display: grid;
+ width: 1000px;
+ overflow: hidden;
+ border-radius: 10px;
+ margin: 1.5rem;
+ grid-template-columns: repeat(3, 1fr);
+}

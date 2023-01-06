@@ -1,0 +1,16 @@
+.Cards {
+ display: flex;
+ height: 20rem;
+ gap: 7rem;
+ align-items: center;
+ justify-content: center;
+}
+
+.Cards > div:nth-child(2) {
+ align-items: flex-start;
+ justify-content: center;
+}
+
+.parentContainer {
+ width: 15rem;
+}
