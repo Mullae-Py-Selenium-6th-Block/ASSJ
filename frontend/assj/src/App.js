@@ -1,17 +1,27 @@
 import "./App.css";
 import Sidebar from "./component/Sidebar/Sidebar";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MainDash from "./component/MainDash/MainDash";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Web from "./Pages/Web";
 
+import axios from "axios";
 function App() {
-  const url = "http://localhost:8000/assj/";
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => console.log(data));
   const [selectedGu, setSelectedGu] = useState(-1);
+  const [graphData, setGraphData] = useState({});
+
+  useEffect(() => {
+    if (selectedGu === -1) {
+      return;
+    }
+    axios
+      .get("http://localhost:8000/assj/" + String(selectedGu) + "/")
+      .then((response) => {
+        setGraphData(response.data);
+      });
+  }, [selectedGu]);
+
   return (
     <BrowserRouter>
       <div className="App">

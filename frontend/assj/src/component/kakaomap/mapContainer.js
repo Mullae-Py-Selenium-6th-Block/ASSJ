@@ -1,7 +1,7 @@
 import { MapMarker, Map, Polygon } from "react-kakao-maps-sdk";
 import { React, useState } from "react";
 import "./mapContainer.css";
-// import Modal from "./modal";
+import Modal from "./modal";
 
 function MapContainer() {
   const [areas, setAreas] = useState([
@@ -27785,10 +27785,19 @@ function MapContainer() {
       ],
     },
   ]);
-  const [mousePosition, setMousePosition] = useState({
-    lat: 0,
-    lng: 0,
-  });
+
+  const [modalOpen, setState] = useState(false);
+
+  const openModal = () => {
+    setState(true);
+  };
+  const closeModal = () => {
+    setState(false);
+  };
+  // const [mousePosition, setMousePosition] = useState({
+  //   lat: 0,
+  //   lng: 0,
+  // });
   const [clickedArea, setClickedArea] = useState();
   const handleClick = () => {
     console.log("here");
@@ -27816,73 +27825,36 @@ function MapContainer() {
         // }
       >
         {areas.map((area, index) => (
-          <Polygon
-            key={`area-${area.name}`}
-            path={area.path}
-            strokeWeight={2}
-            strokeColor={"#004c80"}
-            strokeOpacity={0.8}
-            fillColor={area.isMouseover ? "#09f" : "#fff"}
-            fillOpacity={0.7}
-            onMouseover={() =>
-              setAreas((prev) => [
-                ...prev.filter((_, i) => i !== index),
-                {
-                  ...prev[index],
-                  isMouseover: true,
-                },
-              ])
-            }
-            onMouseout={() =>
-              setAreas((prev) => [
-                ...prev.filter((_, i) => i !== index),
-                {
-                  ...prev[index],
-                  isMouseover: false,
-                },
-              ])
-            }
-            onClick={(polygon, mouseEvent) => {
-              setClickedArea({
-                position: {
-                  lat: mouseEvent.latLng.getLat(),
-                  lng: mouseEvent.latLng.getLng(),
-                },
-                area: Math.floor(polygon.getArea()),
-                name: area.name,
-              });
-              console.log("here");
-            }}
-          />
-        ))}
-        {/* {areas.findIndex((v) => v.isMouseover) !== -1 && (
-          <CustomOverlayMap position={mousePosition}>
-            <div className="area">{areas.find((v) => v.isMouseover).name}</div>
-          </CustomOverlayMap>
-        )}
-        {clickedArea && (
-          <MapInfoWindow position={clickedArea.position}>
-            <img
-              alt="close"
-              width="14"
-              height="13"
-              src="http://t1.daumcdn.net/localimg/localimages/07/mapjsapi/2x/bt_close.gif"
-              style={{
-                position: "absolute",
-                right: "5px",
-                top: "5px",
-                cursor: "pointer",
+          <>
+            <Polygon
+              key={`area-${area.name}`}
+              path={area.path}
+              strokeWeight={2}
+              strokeColor={"#004c80"}
+              strokeOpacity={0.8}
+              fillColor={area.isMouseover ? "#09f" : "#fff"}
+              fillOpacity={0.7}
+              onClick={(polygon, mouseEvent) => {
+                // setClickedArea({
+                //   position: {
+                //     lat: mouseEvent.latLng.getLat(),
+                //     lng: mouseEvent.latLng.getLng(),
+                //   },
+                //   area: Math.floor(polygon.getArea()),
+                //   name: area.name,
+                // });
+                openModal();
+                console.log(modalOpen);
               }}
-              onClick={() => setClickedArea(null)}
-            ></img>
-            <div className="info">
-              <div className="title">{clickedArea.name}</div>
-              <div className="size">
-                총 면적 : 약 {clickedArea.area})m<sup>2</sup>
-              </div>
-            </div>
-          </MapInfoWindow>
-        )} */}
+            />
+            <Modal
+              open={modalOpen}
+              close={closeModal}
+              index={area.id}
+              name={area.name}
+            />
+          </>
+        ))}
       </Map>
     </>
   );

@@ -1,8 +1,10 @@
 import React from "react";
 import Chart from "./chart";
 import "./modal.css";
+
 const Modal = (props) => {
   const { open, close, index, name } = props;
+  console.log("modal");
   console.log(props);
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.

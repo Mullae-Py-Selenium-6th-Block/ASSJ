@@ -1,7 +1,7 @@
 import SelectButton from "../component/SelectButton/SelectButton";
 import MapContainer from "../component/kakaomap/mapContainer";
 
-const Web = (selectedGu, setSelectedGu) => {
+const Web = ({ selectedGu, setSelectedGu }) => {
   return (
     <div>
       <SelectButton selectedGu={selectedGu} setSelectedGu={setSelectedGu} />
