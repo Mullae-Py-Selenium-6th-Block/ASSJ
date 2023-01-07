@@ -10,6 +10,8 @@ import Modal from "./component/kakaomap/modal";
 function App() {
   const [selectedGu, setSelectedGu] = useState([-1, ""]);
   const [graphData, setGraphData] = useState({});
+  const [isClicked, setIsClicked] = useState(false);
+  const [rankingdata, setRankingData] = useState({});
 
   const [modalOpen, setState] = useState(false);
   const openModal = () => {
@@ -31,6 +33,24 @@ function App() {
     openModal();
   }, [selectedGu]);
 
+  useEffect(() => {
+    console.log("useeffect");
+    console.log(isClicked);
+    if (isClicked === false) {
+      axios
+        .get("http://localhost:8000/assj/ranking/order/0/")
+        .then((response) => {
+          setRankingData(response.data);
+        });
+    } else if (isClicked === true) {
+      axios
+        .get("http://localhost:8000/assj/ranking/order/1/")
+        .then((response) => {
+          setRankingData(response.data);
+        });
+    }
+  }, [isClicked]);
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -43,7 +63,12 @@ function App() {
                 <Web setSelectedGu={setSelectedGu} selectedGu={selectedGu} />
               }
             ></Route>
-            <Route path="/rank" element={<MainDash />}></Route>
+            <Route
+              path="/rank"
+              element={
+                <MainDash isClicked={isClicked} setIsClicked={setIsClicked} />
+              }
+            ></Route>
           </Routes>
         </div>
         <Modal
