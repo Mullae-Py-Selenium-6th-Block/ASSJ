@@ -6,22 +6,12 @@ import Green from "../../img/Green.png";
 import Yellow from "../../img/Yellow.png";
 
 const RankingList = ({ isClicked, setIsClicked }) => {
-  const consoleToggle = () => {
-    console.log("눌림");
-    setIsClicked((current) => !current);
-  };
 
   return (
     <div className="RankingList">
       <div className="titbox">
         자치구 랭킹
-        <div
-          onClick={() => {
-            setIsClicked(!isClicked);
-          }}
-        >
-          <Switch />
-        </div>
+        <Switch isClicked={isClicked} setIsClicked={setIsClicked}/>
       </div>
       <div className="listData">
         <div className="listheader">
