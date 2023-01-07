@@ -1,31 +1,27 @@
+import "./chart.css";
+import React from "react";
 import {
-  LineChart,
-  Line,
-  CartesianGrid,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
+  CartesianGrid,
   Tooltip,
 } from "recharts";
 
-const Chart = (index) => {
-  const data = [{ name: "Page A", uv: 400, pv: 2400, amt: 2400 }];
+export default function Chart({ graphData }) {
   return (
-    <div>
-      <LineChart
-        width={300}
-        height={100}
-        // data={data[index]}
-        data={data}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-      >
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-      </LineChart>
-    </div>
+    <AreaChart width={700} height={400} data={graphData}>
+      <CartesianGrid strokeDasharray="5 5" />
+      <XAxis dataKey="date" />
+      <YAxis />
+      <Tooltip />
+      <Area
+        type="monotone"
+        dataKey="predictprice"
+        stroke="#6D8B74"
+        fill="#6D8B74"
+      />
+    </AreaChart>
   );
-};
-
-export default Chart;
+}

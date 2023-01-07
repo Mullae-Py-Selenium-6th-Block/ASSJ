@@ -1,25 +1,34 @@
 import "./App.css";
 import Sidebar from "./component/Sidebar/Sidebar";
-
 import { useEffect, useState } from "react";
 import MainDash from "./component/MainDash/MainDash";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Web from "./Pages/Web";
-
 import axios from "axios";
+import Modal from "./component/kakaomap/modal";
+
 function App() {
-  const [selectedGu, setSelectedGu] = useState(-1);
+  const [selectedGu, setSelectedGu] = useState([-1, ""]);
   const [graphData, setGraphData] = useState({});
 
+  const [modalOpen, setState] = useState(false);
+  const openModal = () => {
+    setState(true);
+  };
+  const closeModal = () => {
+    setState(false);
+  };
+
   useEffect(() => {
-    if (selectedGu === -1) {
+    if (selectedGu[0] === -1) {
       return;
     }
     axios
-      .get("http://localhost:8000/assj/" + String(selectedGu) + "/")
+      .get("http://localhost:8000/assj/" + String(selectedGu[0]) + "/")
       .then((response) => {
         setGraphData(response.data);
       });
+    openModal();
   }, [selectedGu]);
 
   return (
@@ -37,6 +46,14 @@ function App() {
             <Route path="/rank" element={<MainDash />}></Route>
           </Routes>
         </div>
+        <Modal
+          open={modalOpen}
+          close={closeModal}
+          selectedGu={selectedGu}
+          setSelectedGu={setSelectedGu}
+          graphData={graphData}
+        />
+        ;
       </div>
     </BrowserRouter>
   );

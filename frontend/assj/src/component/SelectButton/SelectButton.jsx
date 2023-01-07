@@ -1,6 +1,6 @@
 import "./SelectButton.css";
 import React, { useState } from "react";
-
+import Modal from "../kakaomap/modal";
 const SelectButton = ({ selectedGu, setSelectedGu }) => {
   let data = [
     "강남구",
@@ -32,7 +32,7 @@ const SelectButton = ({ selectedGu, setSelectedGu }) => {
 
   const toggleActive = (e) => {
     setSelectedGu((current) => {
-      return e.target.value;
+      return [e.target.value, e.target.innerText];
     });
   };
 
