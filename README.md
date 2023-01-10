@@ -68,7 +68,14 @@
 ### 카카오맵api를 이용해 지도 나타내기<br/> 
 <br/><br/>
 # 평가 및 피드백<br/>
-## 모형 발전 
+## 모형 발전 <br/><br/>
+<br/><br/>
+
+### notion : https://www.notion.so/crassula/85dca7907061470194784811b2c17f43
+ 
+
+
+
 
 
 
