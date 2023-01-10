@@ -6,7 +6,7 @@ const Web = ({ selectedGu, setSelectedGu }) => {
     <div>
       <SelectButton selectedGu={selectedGu} setSelectedGu={setSelectedGu} />
       <div id="mapContainer">
-        <MapContainer />
+        <MapContainer selectedGu={selectedGu} setSelectedGu={setSelectedGu} />
       </div>
     </div>
   );

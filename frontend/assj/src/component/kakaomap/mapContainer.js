@@ -1,12 +1,11 @@
-import { MapMarker, Map, Polygon } from "react-kakao-maps-sdk";
+import { Map, Polygon } from "react-kakao-maps-sdk";
 import { React, useState } from "react";
 import "./mapContainer.css";
-import Modal from "./modal";
 
-function MapContainer() {
+function MapContainer({ selectedGu, setSelectedGu }) {
   const [areas, setAreas] = useState([
     {
-      id: 1,
+      id: 20,
       name: "용산구",
       isMouseover: false,
       path: [
@@ -43,7 +42,7 @@ function MapContainer() {
       ],
     },
     {
-      id: 2,
+      id: 23,
       isMouseover: false,
       name: "중구",
       path: [
@@ -89,7 +88,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 3,
+      id: 22,
       isMouseover: false,
       name: "종로구",
       path: [
@@ -145,7 +144,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 4,
+      id: 13,
       isMouseover: false,
       name: "서대문구",
       path: [
@@ -186,7 +185,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 5,
+      id: 10,
       isMouseover: false,
       name: "동대문구",
       path: [
@@ -223,7 +222,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 6,
+      id: 16,
       isMouseover: false,
       name: "성북구",
       path: [
@@ -288,7 +287,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 7,
+      id: 15,
       isMouseover: false,
       name: "성동구",
       path: [
@@ -321,7 +320,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 8,
+      id: 12,
       isMouseover: false,
       name: "마포구",
       path: [
@@ -1438,7 +1437,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 9,
+      id: 1,
       isMouseover: false,
       name: "강동구",
       path: [
@@ -2399,7 +2398,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 10,
+      id: 17,
       isMouseover: false,
       name: "송파구",
       path: [
@@ -4095,7 +4094,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 11,
+      id: 0,
       isMouseover: false,
       name: "강남구",
       path: [
@@ -5490,7 +5489,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 12,
+      id: 14,
       isMouseover: false,
       name: "서초구",
       path: [
@@ -7260,7 +7259,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 13,
+      id: 4,
       isMouseover: false,
       name: "관악구",
       path: [
@@ -8784,7 +8783,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 14,
+      id: 11,
       isMouseover: false,
       name: "동작구",
       path: [
@@ -10003,7 +10002,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 15,
+      id: 19,
       isMouseover: false,
       name: "영등포구",
       path: [
@@ -11531,7 +11530,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 16,
+      id: 3,
       isMouseover: false,
       name: "강서구",
       path: [
@@ -14350,7 +14349,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 17,
+      id: 18,
       isMouseover: false,
       name: "양천구",
       path: [
@@ -16405,7 +16404,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 18,
+      id: 21,
       isMouseover: false,
       name: "은평구",
       path: [
@@ -17969,7 +17968,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 19,
+      id: 8,
       isMouseover: false,
       name: "노원구",
       path: [
@@ -19381,7 +19380,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 20,
+      id: 9,
       isMouseover: false,
       name: "도봉구",
       path: [
@@ -20761,7 +20760,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 21,
+      id: 2,
       isMouseover: false,
       name: "강북구",
       path: [
@@ -22278,7 +22277,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 22,
+      id: 24,
       isMouseover: false,
       name: "중랑구",
       path: [
@@ -23491,7 +23490,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 23,
+      id: 5,
       isMouseover: false,
       name: "광진구",
       path: [
@@ -24052,7 +24051,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 24,
+      id: 7,
       isMouseover: false,
       name: "금천구",
       path: [
@@ -25312,7 +25311,7 @@ function MapContainer() {
       color: "#283D59",
     },
     {
-      id: 2,
+      id: 6,
       isMouseover: false,
       name: "구로구",
       path: [
@@ -27787,21 +27786,13 @@ function MapContainer() {
   ]);
 
   const [modalOpen, setState] = useState(false);
-
   const openModal = () => {
     setState(true);
   };
   const closeModal = () => {
     setState(false);
   };
-  // const [mousePosition, setMousePosition] = useState({
-  //   lat: 0,
-  //   lng: 0,
-  // });
-  const [clickedArea, setClickedArea] = useState();
-  const handleClick = () => {
-    console.log("here");
-  };
+
   return (
     <>
       <Map // 지도를 표시할 Container
@@ -27814,46 +27805,25 @@ function MapContainer() {
         style={{
           // 지도의 크기
           width: "100%",
-          height: "450px",
+          height: "530px",
         }}
         level={9} // 지도의 확대 레벨
-        // onMouseMove={(_map, mouseEvent) =>
-        //   setMousePosition({
-        //     lat: mouseEvent.latLng.getLat(),
-        //     lng: mouseEvent.latLng.getLng(),
-        //   })
-        // }
       >
         {areas.map((area, index) => (
-          <>
-            <Polygon
-              key={`area-${area.name}`}
-              path={area.path}
-              strokeWeight={2}
-              strokeColor={"#004c80"}
-              strokeOpacity={0.8}
-              fillColor={area.isMouseover ? "#09f" : "#fff"}
-              fillOpacity={0.7}
-              onClick={(polygon, mouseEvent) => {
-                // setClickedArea({
-                //   position: {
-                //     lat: mouseEvent.latLng.getLat(),
-                //     lng: mouseEvent.latLng.getLng(),
-                //   },
-                //   area: Math.floor(polygon.getArea()),
-                //   name: area.name,
-                // });
-                openModal();
-                console.log(modalOpen);
-              }}
-            />
-            <Modal
-              open={modalOpen}
-              close={closeModal}
-              index={area.id}
-              name={area.name}
-            />
-          </>
+          <Polygon
+            key={`area-${area.name}`}
+            path={area.path}
+            strokeWeight={2}
+            strokeColor={"#6d8b74"}
+            strokeOpacity={0.8}
+            fillColor={area.isMouseover ? "#09f" : "#fff"}
+            fillOpacity={0.7}
+            onClick={(polygon, mouseEvent) => {
+              openModal();
+              setSelectedGu([area.id, area.name]);
+              // setSelectedArea(area);
+            }}
+          />
         ))}
       </Map>
     </>

@@ -2,23 +2,20 @@ import React from "react";
 import Chart from "./chart";
 import "./modal.css";
 
-const Modal = (props) => {
-  const { open, close, index, name } = props;
-  console.log("modal");
-  console.log(props);
+const Modal = ({ open, close, selectedGu, setSelectedGu, graphData }) => {
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
     <div className={open ? "openModal modal" : "modal"}>
       {open ? (
         <section>
           <header>
-            {name}
+            <span>{selectedGu[1]}</span>
             <button className="close" onClick={close}>
               &times;
             </button>
           </header>
           <main>
-            <Chart index={index} />
+            <Chart graphData={graphData} />
           </main>
           <footer>
             <button className="close" onClick={close}>
