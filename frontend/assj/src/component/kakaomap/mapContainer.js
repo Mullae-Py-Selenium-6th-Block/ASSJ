@@ -27808,6 +27808,7 @@ function MapContainer({ selectedGu, setSelectedGu }) {
           height: "530px",
         }}
         level={9} // 지도의 확대 레벨
+        draggable={false}
       >
         {areas.map((area, index) => (
           <Polygon

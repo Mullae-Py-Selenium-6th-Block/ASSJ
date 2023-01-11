@@ -1,75 +1,84 @@
+.top-container {
+  display: flex;
+  width: 1000px;
+
+  justify-content: center;
+}
 .CompactCard {
- display: flex;
- flex: 1;
- /* height: 10rem !important; */
- height: auto;
- border-radius: 0.7rem;
- color: #fff;
- position: relative;
- cursor: pointer;
+  display: flex;
+  flex: 1;
+  /* height: 10rem !important; */
+  height: 230px;
+  border-radius: 0.7rem;
+  color: #fff;
+  position: relative;
+  cursor: pointer;
+  margin-right: 50px;
 }
 
 .CompactCard:hover {
- box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .detail {
- flex: 1;
- display: flex;
- flex-direction: column;
- align-items: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
+.info {
+  margin-top: 13px;
+}
 .detail > div {
- width: 100%;
- padding: 0.5rem 0;
- font-family: "Poppins";
- font-style: normal;
- font-weight: 800;
- font-size: 16px;
- line-height: 24px;
- text-align: center;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
 
- color: #000000;
+  color: #000000;
 }
 
 .detail > div:nth-child(1) {
- background: #d9d9d9;
- font-family: "Poppins";
- font-style: normal;
- font-weight: 800;
- font-size: 24px;
- line-height: 30px;
+  background: #d9d9d9;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 30px;
 
- text-align: center;
- color: #000000;
+  text-align: center;
+  color: #000000;
 }
 
 .detail > div > div:nth-child(1) {
- width: 30%;
- text-align: left;
- margin-left: 2rem;
- float: left;
+  width: 30%;
+  text-align: left;
+  margin-left: 2rem;
+  float: left;
 }
 
 .detail > div > div :nth-child(2) {
- width: 50%;
- text-align: center;
- float: right;
+  width: 50%;
+  text-align: center;
+  float: right;
 }
 
 .Name {
- background: #d9d9d9;
- font-family: "Poppins";
- font-style: normal;
- font-weight: 800;
- font-size: 32px;
- line-height: 48px;
- /* identical to box height */
- border-top-left-radius: 0.7rem;
- border-top-right-radius: 0.7rem;
+  background: #d9d9d9;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 48px;
+  /* identical to box height */
+  border-top-left-radius: 0.7rem;
+  border-top-right-radius: 0.7rem;
 
- text-align: center;
+  text-align: center;
 
- color: #000000;
+  color: #000000;
 }

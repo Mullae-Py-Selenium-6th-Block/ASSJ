@@ -11,7 +11,7 @@ function App() {
   const [selectedGu, setSelectedGu] = useState([-1, ""]);
   const [graphData, setGraphData] = useState({});
   const [isClicked, setIsClicked] = useState(false);
-  const [rankingdata, setRankingData] = useState({});
+  const [rankingData, setRankingData] = useState([]);
 
   const [modalOpen, setState] = useState(false);
   const openModal = () => {
@@ -34,23 +34,21 @@ function App() {
   }, [selectedGu]);
 
   useEffect(() => {
-    console.log("useeffect");
     console.log(isClicked);
     if (isClicked === false) {
       axios
         .get("http://localhost:8000/assj/ranking/order/0/")
         .then((response) => {
-          setRankingData(response.data);
+          setRankingData(response.data?.data);
         });
     } else if (isClicked === true) {
       axios
         .get("http://localhost:8000/assj/ranking/order/1/")
         .then((response) => {
-          setRankingData(response.data);
+          setRankingData(response.data?.data);
         });
     }
   }, [isClicked]);
-
   return (
     <BrowserRouter>
       <div className="App">
@@ -66,7 +64,11 @@ function App() {
             <Route
               path="/rank"
               element={
-                <MainDash isClicked={isClicked} setIsClicked={setIsClicked} />
+                <MainDash
+                  isClicked={isClicked}
+                  setIsClicked={setIsClicked}
+                  rankingData={rankingData}
+                />
               }
             ></Route>
           </Routes>
@@ -78,7 +80,6 @@ function App() {
           setSelectedGu={setSelectedGu}
           graphData={graphData}
         />
-        ;
       </div>
     </BrowserRouter>
   );

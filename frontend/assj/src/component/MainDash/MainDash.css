@@ -1,6 +1,108 @@
 .MainDash {
- display: flex;
- flex-direction: column;
- justify-content: space-evenly;
- margin: 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 2.5rem;
+}
+
+.Top3 {
+  display: grid;
+  height: 240px;
+  width: 1000px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-left: 75px;
+  justify-content: center;
+  /* min-height: 220px; */
+}
+
+.Cards {
+  display: flex;
+  height: 20rem;
+  gap: 7rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.Cards > div:nth-child(2) {
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.RankingList {
+  width: 95%;
+  height: 280px;
+  justify-content: center;
+  align-items: center;
+  background: #f2f2f2;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.listData {
+  height: 210px;
+  overflow: scroll;
+}
+
+.titbox {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  margin: 1.5rem 3rem 0.5rem;
+  /* identical to box height, or 150% */
+  color: #000000;
+}
+
+.listheader {
+  box-sizing: border-box;
+  position: relative;
+  margin: 1rem 1.5rem;
+  /* width: 900px; */
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  /* Gray/200 */
+  border: 1px solid #eaecf0;
+  border-radius: 6px;
+}
+
+.column {
+  flex: 1;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 56px;
+  text-align: center;
+  width: 20%;
+  margin: 0 auto;
+  /*Gray/800*/
+  color: #1d2939;
+}
+
+.column img {
+  margin: 0 auto;
+  display: block;
+}
+
+.column3 {
+  font-family: "Baloo 2";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 35px;
+
+  margin: 0 2rem;
+  align-items: center;
+  text-align: center;
+  color: #1d2939;
+
+  width: 101px;
+  height: 35px;
+
+  background: #fcafaf;
+  border-radius: 20px;
 }
