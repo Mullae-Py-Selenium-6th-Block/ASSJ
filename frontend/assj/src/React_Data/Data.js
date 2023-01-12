@@ -19,3 +19,5 @@ export const color = {
   backGround: "#f2f2f2",
   boxShadow: "0px 5px 5px 0px #909090",
 };
+
+export const formatter = new Intl.NumberFormat("ko-KR");

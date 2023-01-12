@@ -11,7 +11,12 @@ import {
 
 export default function Chart({ graphData }) {
   return (
-    <AreaChart width={700} height={400} data={graphData}>
+    <AreaChart
+      width={700}
+      height={400}
+      viewBox={"0 -10 600 400"}
+      data={graphData}
+    >
       <CartesianGrid strokeDasharray="5 5" />
       <XAxis dataKey="date" />
       <YAxis />

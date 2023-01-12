@@ -32,7 +32,7 @@ function Guitems({ isClicked, setIsClicked, rankingData, setDetail }) {
         <div className="titbox">
           자치구 랭킹
           <span className="switch-name">
-            {isClicked ? " (증감율 낮은 순)" : " (증감율 높은 순)"}
+            {isClicked ? " (증감율 높은 순)" : " (증감율 낮은 순)"}
           </span>
           <Switch isClicked={isClicked} setIsClicked={setIsClicked} />
         </div>

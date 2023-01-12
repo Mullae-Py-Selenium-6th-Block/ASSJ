@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans+KR&display=swap");
-.modal {
+.modalDetail {
   display: none;
   position: fixed;
   z-index: 999;
@@ -8,22 +8,23 @@
   background-color: rgba(0, 0, 0, 0.6);
   font-family: "Montserrat", sans-serif;
 }
-.modal button {
+.modalDetail button {
   outline: none;
   cursor: pointer;
   border: 0;
 }
-.modal > section {
+.modalDetail > section {
   width: 90%;
   max-width: 900px;
+  max-height: 800px;
   margin: 0 auto;
   border-radius: 0.3rem;
   background-color: #f2f2f2;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
-  animation: modal-show 0.3s;
-  overflow: hidden;
+  animation: modalDetail-show 0.3s;
+  overflow: scroll;
 }
-.modal > section > header {
+.modalDetail > section > header {
   position: relative;
   height: 10px;
   padding: 20px 64px 16px 16px;
@@ -31,13 +32,13 @@
   font-weight: 700;
   margin-bottom: 15px;
 }
-.modal > section > header span {
+.modalDetail > section > header span {
   text-align: center;
   font-size: 25px;
   margin-left: 10px;
   color: #5f7161;
 }
-.modal > section > header button {
+.modalDetail > section > header button {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -49,21 +50,51 @@
   border-radius: 10px;
   background-color: #6d8b74;
 }
-.modal > section > main {
+.modalDetail > section > main {
   padding: 18px;
   display: flex;
-
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   /* border-bottom: 1px solid #dee2e6; */
   border-top: 0.5px solid #5f7161;
 }
-.modal > section > footer {
+
+Table {
+  margin-top: 30px;
+  width: 700px;
+}
+tr {
+  height: 30px;
+}
+th {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+td {
+  text-align: center;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+.cateButton {
+  background-color: #6d8b74;
+  color: #fff;
+  height: 25px;
+  border-radius: 4px;
+  margin: 5px;
+}
+
+.cateButton:active {
+  color: #6d8b74;
+}
+.modalDetail > section > footer {
   display: flex;
   justify-content: center;
   padding: 12px 16px;
   text-align: right;
 }
-.modal > section > footer button {
+.modalDetail > section > footer button {
   padding: 6px 12px;
   margin-bottom: 10px;
   width: 100px;
@@ -72,13 +103,13 @@
   border-radius: 15px;
   font-size: 18px;
 }
-.modal.openModal {
+.modalDetail.openDetailModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
-  animation: modal-bg-show 0.3s;
+  animation: modalDetail-bg-show 0.3s;
 }
-@keyframes modal-show {
+@keyframes modalDetail-show {
   from {
     opacity: 0;
     margin-top: -50px;
@@ -88,11 +119,14 @@
     margin-top: 0;
   }
 }
-@keyframes modal-bg-show {
+@keyframes modalDetail-bg-show {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
   }
+}
+.activecate {
+  background-color: #008000;
 }

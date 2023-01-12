@@ -49,13 +49,13 @@ function App() {
     console.log(isClicked);
     if (isClicked === false) {
       axios
-        .get("http://43.201.96.246/assj/ranking/order/0/")
+        .get("http://43.201.96.246/assj/ranking/order/1/")
         .then((response) => {
           setRankingData(response.data?.data);
         });
     } else if (isClicked === true) {
       axios
-        .get("http://43.201.96.246/assj/ranking/order/1/")
+        .get("http://43.201.96.246/assj/ranking/order/0/")
         .then((response) => {
           setRankingData(response.data?.data);
         });
@@ -76,8 +76,8 @@ function App() {
       .then((response) => {
         setDetail(response.data);
         console.log(detailData);
+        openDetail();
       });
-    openDetail();
   }, [detailGu]);
 
   return (
