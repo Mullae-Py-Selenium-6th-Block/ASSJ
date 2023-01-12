@@ -15,7 +15,11 @@
   justify-content: center;
   /* min-height: 220px; */
 }
-
+.switch-name {
+  font-size: 15px;
+  font-family: "Poppins";
+  color: rgba(0, 0, 0, 0.5);
+}
 .Cards {
   display: flex;
   height: 20rem;

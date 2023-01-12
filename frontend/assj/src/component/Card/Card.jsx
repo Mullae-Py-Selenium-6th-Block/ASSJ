@@ -1,43 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Card.css";
-import { motion, AnimateSharedLayout } from "framer-motion";
-import { UilTimes } from "@iconscout/react-unicons";
-import Chart from "react-apexcharts";
+import { AnimateSharedLayout } from "framer-motion";
 import Red from "../../img/Red.png";
 import Green from "../../img/Green.png";
 import Yellow from "../../img/Yellow.png";
-
-const Card = ({ rankingData }) => {
-  const color = {
-    backGround: "#f2f2f2",
-    boxShadow: "0px 5px 5px 0px #909090",
-  };
-
-  console.log(rankingData, color);
-
-  const [expanded, setExpanded] = useState(false);
-
+import { color } from "../../React_Data/Data";
+const Card = ({ rankingData, setDetail }) => {
   return (
     <AnimateSharedLayout>
-      {expanded ? (
-        <ExpandedCard
-          rankingData={rankingData}
-          color={color}
-          setExpanded={() => setExpanded(false)}
-        />
-      ) : (
-        <CompactCard
-          rankingData={rankingData}
-          color={color}
-          setExpanded={() => setExpanded(true)}
-        />
-      )}
+      <CompactCard
+        rankingData={rankingData}
+        setDetail={setDetail}
+        color={color}
+      />
     </AnimateSharedLayout>
   );
 };
 
 // CompactCard
-function CompactCard({ rankingData, color, setExpanded }) {
+function CompactCard({ rankingData, color, setDetail }) {
+  const detailbox = (data) => {
+    console.log(data[0], data[1]);
+    setDetail((current) => {
+      return [data[0], data[1]];
+    });
+  };
   const topList = rankingData.map((data, idx) => (
     <div
       key={idx + 1}
@@ -46,10 +33,13 @@ function CompactCard({ rankingData, color, setExpanded }) {
         background: color.backGround,
         boxShadow: color.boxShadow,
       }}
-      onClick={setExpanded}
-      layoutId="expandableCard"
     >
-      <div className="detail">
+      <div
+        className="detail"
+        onClick={() => {
+          detailbox(data);
+        }}
+      >
         <div className="Name">
           {idx + 1}등. {data[1]}
         </div>
@@ -74,76 +64,5 @@ function CompactCard({ rankingData, color, setExpanded }) {
     </div>
   ));
   return <div className="top-container">{topList}</div>;
-}
-
-// ExpandedCard
-function ExpandedCard({ rankingData, color, setExpanded }) {
-  const data = {
-    options: {
-      chart: {
-        type: "area",
-        height: "auto",
-      },
-
-      dropShadow: {
-        enabled: false,
-        enabledOnSeies: undefined,
-        top: 0,
-        left: 0,
-        blur: 3,
-        color: "#000",
-        opacity: 0.35,
-      },
-      fill: {
-        colors: ["#fff"],
-        type: "gradient",
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: "smooth",
-        colors: ["white"],
-      },
-      tooltips: {
-        x: {
-          format: "dd/MM/YY HH:mm",
-        },
-      },
-      grid: {
-        show: true,
-      },
-      xaxis: {
-        type: "datatime",
-        categories: [
-          "2022-12-01T00:00:00.000z",
-          "2022-12-01T01:00:00.000z",
-          "2022-12-01T02:00:00.000z",
-          "2022-12-01T03:00:00.000z",
-          "2022-12-01T04:00:00.000z",
-          "2022-12-01T05:00:00.000z",
-          "2022-12-01T06:00:00.000z",
-        ],
-      },
-    },
-  };
-
-  return (
-    <motion.div
-      className="ExpandedCard"
-      style={{
-        background: color.backGround,
-        boxShadow: color.boxShadow,
-      }}
-      layoutId="expandableCard"
-    >
-      <div>
-        <UilTimes onClick={setExpanded} />
-      </div>
-      <span>{rankingData[1]}</span>
-      <div className="chartContainer"></div>
-      <span>Last 24 hours</span>
-    </motion.div>
-  );
 }
 export default Card;

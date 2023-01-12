@@ -27785,14 +27785,6 @@ function MapContainer({ selectedGu, setSelectedGu }) {
     },
   ]);
 
-  const [modalOpen, setState] = useState(false);
-  const openModal = () => {
-    setState(true);
-  };
-  const closeModal = () => {
-    setState(false);
-  };
-
   return (
     <>
       <Map // 지도를 표시할 Container
@@ -27820,7 +27812,6 @@ function MapContainer({ selectedGu, setSelectedGu }) {
             fillColor={area.isMouseover ? "#09f" : "#fff"}
             fillOpacity={0.7}
             onClick={(polygon, mouseEvent) => {
-              openModal();
               setSelectedGu([area.id, area.name]);
               // setSelectedArea(area);
             }}

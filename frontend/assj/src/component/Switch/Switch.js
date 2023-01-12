@@ -1,9 +1,7 @@
 import React from "react";
 import "./Switch.css";
 
-
 const Switch = ({ isClicked, setIsClicked }) => {
-  
   return (
     <>
       <input
@@ -11,7 +9,11 @@ const Switch = ({ isClicked, setIsClicked }) => {
         id={`react-switch-new`}
         type="checkbox"
       />
-      <label className="react-switch-label" htmlFor={`react-switch-new`} onClick={()=>setIsClicked(!isClicked)} >
+      <label
+        className="react-switch-label"
+        htmlFor={`react-switch-new`}
+        onClick={() => setIsClicked(!isClicked)}
+      >
         <span className={`react-switch-button`} />
       </label>
     </>
