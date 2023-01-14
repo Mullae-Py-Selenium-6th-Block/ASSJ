@@ -61,7 +61,6 @@
 }
 
 Table {
-  margin-top: 30px;
   width: 700px;
 }
 tr {
@@ -129,4 +128,13 @@ td {
 }
 .activecate {
   background-color: #008000;
+}
+.month-container {
+  display: flex;
+  justify-content: end;
+}
+.month {
+  margin-top: 30px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
 }

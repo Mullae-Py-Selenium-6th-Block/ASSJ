@@ -108,7 +108,9 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
               totalhousenums={totalhousenums}
               convertrate={convertrate}
             />
-
+            <div className="month-container">
+              <div className="month">최근 11개월</div>
+            </div>
             <Table
               className="table"
               detailData={detailData}
