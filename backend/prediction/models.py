@@ -251,6 +251,7 @@ class TbYoutubecomment(models.Model):
         db_table = 'tb_youtubecomment'
 
 class TbInfo(models.Model):
+    
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     districtname = models.ForeignKey(TbDistrict, models.DO_NOTHING, db_column='DistrictName')  # Field name made lowercase.
     districtid = models.IntegerField(db_column='DistrictID')  # Field name made lowercase.
@@ -268,7 +269,36 @@ class TbInfo(models.Model):
     actualpriceindex = models.FloatField(db_column='ActualPriceIndex', blank=True, null=True)  # Field name made lowercase.
     price = models.IntegerField(db_column='Price', blank=True, null=True)  # Field name made lowercase.
     predictprice = models.IntegerField(db_column='PredictPrice', blank=True, null=True)  # Field name made lowercase.
+    m2 = models.FloatField(db_column='M2', blank=True, null=True)  # Field name made lowercase.
+    baserate = models.FloatField(db_column='BaseRate', blank=True, null=True)  # Field name made lowercase.
+    dollar = models.FloatField(db_column='Dollar', blank=True, null=True)  # Field name made lowercase.
+    kbindex = models.FloatField(db_column='KBIndex', blank=True, null=True)  # Field name made lowercase.
+    sentiment = models.FloatField(db_column='Sentiment', blank=True, null=True)  # Field name made lowercase.
+    unsold = models.FloatField(db_column='Unsold', blank=True, null=True)  # Field name made lowercase.
+    idx = models.FloatField(db_column='Idx', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'tb_info'
+        
+    # id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    # districtname = models.ForeignKey(TbDistrict, models.DO_NOTHING, db_column='DistrictName')  # Field name made lowercase.
+    # districtid = models.IntegerField(db_column='DistrictID')  # Field name made lowercase.
+    # date = models.DateField(db_column='Date')  # Field name made lowercase.
+    # totalhousenums = models.IntegerField(db_column='TotalHouseNums', blank=True, null=True)  # Field name made lowercase.
+    # averageprice = models.FloatField(db_column='AveragePrice', blank=True, null=True)  # Field name made lowercase.
+    # forecastindex = models.FloatField(db_column='ForecastIndex', blank=True, null=True)  # Field name made lowercase.
+    # tradingvolume = models.FloatField(db_column='TradingVolume', blank=True, null=True)  # Field name made lowercase.
+    # averagejeonse = models.FloatField(db_column='AverageJeonse', blank=True, null=True)  # Field name made lowercase.
+    # ratio = models.FloatField(db_column='Ratio', blank=True, null=True)  # Field name made lowercase.
+    # totalproduction = models.FloatField(db_column='TotalProduction', blank=True, null=True)  # Field name made lowercase.
+    # convertrate = models.FloatField(db_column='ConvertRate', blank=True, null=True)  # Field name made lowercase.
+    # changerate = models.FloatField(db_column='ChangeRate', blank=True, null=True)  # Field name made lowercase.
+    # purchasepower = models.FloatField(db_column='PurchasePower', blank=True, null=True)  # Field name made lowercase.
+    # actualpriceindex = models.FloatField(db_column='ActualPriceIndex', blank=True, null=True)  # Field name made lowercase.
+    # price = models.IntegerField(db_column='Price', blank=True, null=True)  # Field name made lowercase.
+    # predictprice = models.IntegerField(db_column='PredictPrice', blank=True, null=True)  # Field name made lowercase.
+
+    # class Meta:
+    #     managed = False
+    #     db_table = 'tb_info'
