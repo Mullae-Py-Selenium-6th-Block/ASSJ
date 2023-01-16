@@ -32,7 +32,10 @@ def ranking_option(requests, ordertype):
 
     for i in range(0,25,1):
         obj = info.filter(districtid=i)
-        last_obj = obj.last()
+        # last_obj = obj.last()
+        # rate = round((last_obj.predictprice - last_obj.price) / last_obj.price * 100, 2)
+        # 11월에 예측한 12월 가격 증감율을 구하기 위한 코드
+        last_obj = obj[len(obj)-2]
         rate = round((last_obj.predictprice - last_obj.price) / last_obj.price * 100, 2)
         # 통계 신호등
         # 청색
