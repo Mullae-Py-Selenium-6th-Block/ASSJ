@@ -53,18 +53,9 @@ def ranking_option(requests, ordertype):
 @api_view(['GET'])
 def ranking_info(requests, districtid):
 
-    change_result = []
-    info = TbInfo.objects.filter(districtid = districtid)
-    year_obj = info[108:119]
-
-    for j in range(len(year_obj)):
-            change_amount = year_obj[j].predictprice - year_obj[j].price
-
-            change_result.append([districtid, year_obj[j].districtname.districtname, year_obj[j].date, year_obj[j].price, year_obj[j].predictprice,
-            year_obj[j].totalhousenums, year_obj[j].averageprice, year_obj[j].tradingvolume, year_obj[j].ratio, year_obj[j].totalproduction,
-            year_obj[j].convertrate, year_obj[j].changerate, year_obj[j].purchasepower, year_obj[j].actualpriceindex, change_amount])
-
-    return JsonResponse({'data': change_result}, safe=False, json_dumps_params={'ensure_ascii':False})
+    district = get_list_or_404(TbInfo, districtid=districtid)[108:119]
+    serializer = InfoSerializer(district, many = True)
+    return Response(data = serializer.data, status = status.HTTP_200_OK)
 
 @api_view(['GET'])
 def economics(requests):
