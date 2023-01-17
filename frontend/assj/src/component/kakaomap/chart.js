@@ -18,7 +18,7 @@ export default function Chart({ graphData }) {
       data={graphData}
     >
       <CartesianGrid strokeDasharray="5 5" />
-      <XAxis dataKey="date" />
+      <XAxis dataKey="after_date" />
       <YAxis />
       <Tooltip />
       <Area

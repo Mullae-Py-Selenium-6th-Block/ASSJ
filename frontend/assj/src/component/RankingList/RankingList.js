@@ -4,6 +4,8 @@ import Green from "../../img/Green.png";
 import Yellow from "../../img/Yellow.png";
 import { color } from "../../React_Data/Data";
 import { AnimateSharedLayout } from "framer-motion";
+import { formatter } from "../../React_Data/Data";
+import "./RankingList.css";
 
 const RankingList = ({ isClicked, setIsClicked, rankingData, setDetail }) => {
   return (
@@ -32,7 +34,7 @@ function Guitems({ isClicked, setIsClicked, rankingData, setDetail }) {
         <div className="titbox">
           자치구 랭킹
           <span className="switch-name">
-            {isClicked ? " (증감율 높은 순)" : " (증감율 낮은 순)"}
+            {isClicked ? " (증감율 낮은 순)" : " (증감율 높은 순)"}
           </span>
           <Switch isClicked={isClicked} setIsClicked={setIsClicked} />
         </div>
@@ -41,8 +43,8 @@ function Guitems({ isClicked, setIsClicked, rankingData, setDetail }) {
             <span className="column">순위</span>
             <span className="column">자치구명</span>
             <span className="column">가격 증감율(%)</span>
-            <span className="column">현재 평균매매가(만원)</span>
-            <span className="column">예상 평균매매가(만원)</span>
+            <span className="column">금월 매매가(천원)</span>
+            <span className="column">익월 예측가(천원)</span>
             <span className="column">통계 신호등</span>
           </div>
           {rankingData
@@ -58,12 +60,14 @@ function Guitems({ isClicked, setIsClicked, rankingData, setDetail }) {
                     <span className="column">{4 + idx}</span>
                     <span className="column">{data[1]}</span>
                     <span className="column">
-                      <div className="column3">
+                      <div
+                        className={"column3" + (data[2] > 0 ? " red" : " blue")}
+                      >
                         {data[2] > 0 ? "+" + data[2] : data[2]}
                       </div>
                     </span>
-                    <span className="column">{data[3]}</span>
-                    <span className="column">{data[4]}</span>
+                    <span className="column">{formatter.format(data[3])}</span>
+                    <span className="column">{formatter.format(data[4])}</span>
                     <span className="column">
                       <img
                         src={data[2] > 0 ? Green : data[2] < 0 ? Red : Yellow}

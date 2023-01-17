@@ -14,11 +14,6 @@ tspan {
   justify-content: center;
 }
 
-.info-text {
-  color: rgba(0, 0, 0, 0.3);
-  font-size: smaller;
-}
-
 .unit-chart {
   display: flex;
 }

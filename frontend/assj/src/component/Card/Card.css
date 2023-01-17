@@ -68,6 +68,7 @@
 }
 
 .Name {
+  display: flex;
   background: #d9d9d9;
   font-family: "Poppins";
   font-style: normal;

@@ -52,7 +52,9 @@ const SelectButton = ({ selectedGu, setSelectedGu }) => {
               <button
                 key={idx}
                 value={idx}
-                className={"btn" + (idx == selectedGu ? " active" : "")}
+                className={
+                  "btn" + (idx == selectedGu[0] ? " buttonactive" : "")
+                }
                 onClick={toggleActive}
               >
                 {item}

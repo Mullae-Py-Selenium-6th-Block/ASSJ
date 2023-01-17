@@ -4,7 +4,13 @@ import { AnimateSharedLayout } from "framer-motion";
 import Red from "../../img/Red.png";
 import Green from "../../img/Green.png";
 import Yellow from "../../img/Yellow.png";
+import first from "../../img/first.png";
+import second from "../../img/second.png";
+import third from "../../img/third.png";
+
 import { color } from "../../React_Data/Data";
+import { formatter } from "../../React_Data/Data";
+
 const Card = ({ rankingData, setDetail }) => {
   return (
     <AnimateSharedLayout>
@@ -41,7 +47,8 @@ function CompactCard({ rankingData, color, setDetail }) {
         }}
       >
         <div className="Name">
-          {idx + 1}등. {data[1]}
+          <img src={idx === 0 ? first : idx === 2 ? second : third} />
+          {data[1]}
         </div>
         <div className="Percent info">
           <div>증감율</div>
@@ -49,7 +56,7 @@ function CompactCard({ rankingData, color, setDetail }) {
         </div>
         <div className="Price info">
           <div>평균매매가</div>
-          <div>{data[3]}</div>
+          <div>{formatter.format(data[3])}</div>
         </div>
         <div className="Signal info">
           <div>통계신호등</div>

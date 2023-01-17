@@ -12,17 +12,6 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
   //총세대 수: totalhousenums
   //매매거래량: tradingvolume
   const [category, setCategory] = useState(-1);
-
-  const columns = [
-    "날짜",
-    "가격(천원)",
-    "예상 가격(천원)",
-    // "총 인구수",
-    "총 세대수(세대)",
-    "매매거래량(호)",
-    "전월세전환율(%)",
-    // "미분양",
-  ];
   const price = [];
   const predictprice = [];
   const totalhousenums = [];
@@ -30,8 +19,11 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
   const convertrate = [];
   // const predictpricelist = [];
   for (let i = 0; i < detailData.length; i++) {
-    price.push({ x: detailData[i].date, y: detailData[i].price });
-    predictprice.push({ x: detailData[i].date, y: detailData[i].predictprice });
+    price.push({
+      x: detailData[i].date,
+      y: detailData[i].price,
+      y1: detailData[i].predictprice,
+    });
     totalhousenums.push({
       x: detailData[i].date,
       y: detailData[i].totalhousenums,
@@ -42,13 +34,65 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
     });
     convertrate.push({ x: detailData[i].date, y: detailData[i].convertrate });
   }
-  // for (let i = 0; i < detailData.length; i++) {
-  //   predictpricelist.push({
-  //     date: detailData[i].date,
-  //     districtname: detailData[i].districtname,
-  //     predictprice: detailData[i].predictprice,
-  //   });
-  // }
+  var dataTemp = price;
+  var dataDomain = [];
+  var dataUnit = "";
+  var datainfo = "";
+  var tableD = [];
+  const [usageStatus, setUsageStatus] = useState([]);
+  const [domain, setDomain] = useState([]);
+  const [unit, setUnit] = useState("");
+  const [infoText, setInfoText] = useState("");
+  const [columns, setColumns] = useState([]);
+  const [tableData, setTableData] = useState();
+
+  useEffect(() => {
+    if (category === 1) {
+      dataTemp = tradingvolume;
+      dataDomain = ["dataMin", "dataMax"];
+      dataUnit = "단위: (호)";
+      datainfo = "한 달간 해당 자치구에서 거래된 아파트 매물의 수";
+      setColumns(["날짜", "매매거래량(호)"]);
+      tableD = detailData.map((detail) => {
+        return [detail.date, detail.tradingvolume];
+      });
+    } else if (category === 2) {
+      dataTemp = convertrate;
+      dataDomain = ["dataMin", "dataMax"];
+      dataUnit = "단위: (%)";
+      datainfo =
+        "한 달간 평균적으로 해당 권역에서 전세 보증금을 월세로 전환했을 때 적용하는 비율";
+      setColumns(["날짜", "전월세전환율(%)"]);
+      tableD = detailData?.map((detail) => {
+        return [detail.date, detail.convertrate];
+      });
+    } else if (category === 3) {
+      dataTemp = totalhousenums;
+      dataDomain = ["dataMin", "dataMax"];
+      dataUnit = "단위: (세대)";
+      datainfo = "자치구별 세대 수";
+      setColumns(["날짜", "총 세대수(세대)"]);
+      tableD = detailData.map((detail) => {
+        return [detail.date, detail.totalhousenums];
+      });
+    } else {
+      dataTemp = price;
+      dataDomain = [619500, 2312300];
+      dataUnit = "단위: (천원)";
+      datainfo =
+        "한 달간 해당 자치구에 올라온 아파트 매물의 매매 가격을 모두 더한 뒤에 전체 매물의 수로 나눈 값";
+      setColumns(["날짜", "평균 매매가"]);
+      tableD = detailData.map((detail) => {
+        return [detail.date, detail.predictprice];
+      });
+    }
+    setUsageStatus(dataTemp);
+    setDomain(dataDomain);
+    setUnit(dataUnit);
+    setInfoText(datainfo);
+    setTableData(tableD);
+  }, [category]);
+
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
     <div className={open ? "openDetailModal modalDetail" : "modalDetail"}>
@@ -63,35 +107,28 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
           <main>
             <div>
               <button
-                className={"cateButton" + (category == 4 ? " activecate" : "")}
-                onClick={() => setCategory(4)}
-                key={4}
-              >
-                실가격
-              </button>
-              <button
-                className={"cateButton" + (category == 0 ? " activecate" : "")}
+                className={"cateButton" + (category === 0 ? " activecate" : "")}
                 onClick={() => setCategory(0)}
                 key={0}
               >
                 예측가격
               </button>
               <button
-                className={"cateButton" + (category == 1 ? " activecate" : "")}
+                className={"cateButton" + (category === 1 ? " activecate" : "")}
                 onClick={() => setCategory(1)}
                 key={1}
               >
                 거래량
               </button>
               <button
-                className={"cateButton" + (category == 3 ? " active" : "")}
+                className={"cateButton" + (category === 3 ? " activecate" : "")}
                 onClick={() => setCategory(3)}
                 key={3}
               >
                 총 세대수
               </button>
               <button
-                className={"cateButton" + (category == 2 ? " active" : "")}
+                className={"cateButton" + (category === 2 ? " activecate" : "")}
                 onClick={() => setCategory(2)}
                 key={2}
               >
@@ -99,22 +136,17 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
               </button>
             </div>
 
-            <Chart
-              tabButtonKey={category}
-              className="chart"
-              price={price}
-              predictprice={predictprice}
-              tradingvolume={tradingvolume}
-              totalhousenums={totalhousenums}
-              convertrate={convertrate}
-            />
-            <div className="month-container">
-              <div className="month">최근 11개월</div>
-            </div>
             <Table
               className="table"
-              detailData={detailData}
               columns={columns}
+              tableData={tableData}
+              infoText={infoText}
+            />
+            <Chart
+              className="chart"
+              unit={unit}
+              domain={domain}
+              usageStatus={usageStatus}
             />
           </main>
           <footer>
@@ -128,41 +160,40 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
   );
 };
 
-function Table({ detailData, columns }) {
+function Table({ columns, tableData, infoText }) {
+  // const reverse = [...tableData].reverse();
   return (
-    <table>
-      <thead>
-        <tr>
-          {columns.map((column) => (
-            <th key={column}>{column}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {detailData.map(
-          (
-            {
-              date,
-              price,
-              predictprice,
-              totalhousenums,
-              tradingvolume,
-              convertrate,
-            },
-            idx
-          ) => (
-            <tr key={idx}>
-              <td>{date}</td>
-              <td>{formatter.format(price)}</td>
-              <td>{formatter.format(predictprice)}</td>
-              <td>{formatter.format(totalhousenums)}</td>
-              <td>{tradingvolume}</td>
-              <td>{convertrate}</td>
-            </tr>
-          )
-        )}
-      </tbody>
-    </table>
+    <>
+      <div className="info-text">{infoText}</div>
+      <div className="month-container">
+        <div className="month">최근 11개월</div>
+      </div>
+      <table className="table-container">
+        <col width="100px" />
+        <thead>
+          <tr>
+            {columns.map((column) => (
+              <th key={column}>{column}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {tableData.map((elem, idx) => {
+            return (
+              <tr key={idx}>
+                {elem.map((item, idx) => {
+                  if (idx === 0) {
+                    return <td>{item}</td>;
+                  } else {
+                    return <td>{formatter.format(item)}</td>;
+                  }
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
   );
 }
 export default DetailModal;

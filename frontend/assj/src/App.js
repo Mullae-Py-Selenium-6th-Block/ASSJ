@@ -16,7 +16,7 @@ function App() {
   const [rankingData, setRankingData] = useState([]); //2번 페이지 랭킹 데이터
 
   const [detailGu, setDetailGu] = useState([-1, ""]); //2번 페이지 클릭된 구
-  const [detailData, setDetail] = useState({}); //2번 페이지 클릭된 구 데이터
+  const [detailData, setDetail] = useState([]); //2번 페이지 클릭된 구 데이터
 
   const [modalOpen, setState] = useState(false); //1번페이지 모달 창 state
   const [DetailOpen, setDetailiOpenState] = useState(false); //1번페이지 모달 창 state
@@ -41,6 +41,7 @@ function App() {
       .get("http://43.201.96.246/assj/" + String(selectedGu[0]) + "/")
       .then((response) => {
         setGraphData(response.data);
+        console.log(graphData);
       });
     openModal();
   }, [selectedGu]);
@@ -75,7 +76,6 @@ function App() {
       )
       .then((response) => {
         setDetail(response.data);
-        console.log(detailData);
         openDetail();
       });
   }, [detailGu]);

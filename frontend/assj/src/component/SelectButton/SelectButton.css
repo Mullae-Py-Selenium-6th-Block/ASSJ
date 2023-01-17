@@ -46,7 +46,7 @@
   font-weight: 500;
 }
 
-.active {
-  background-color: #28303f;
+.buttonactive {
+  background-color: #74917b;
   color: white;
 }
