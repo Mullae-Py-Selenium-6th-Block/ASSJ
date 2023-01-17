@@ -56,7 +56,7 @@ def ranking_option(requests, ordertype):
 @api_view(['GET'])
 def ranking_info(requests, districtid):
 
-    district = get_list_or_404(TbInfo, districtid=districtid)[108:119]
+    district = get_list_or_404(TbInfo, districtid=districtid)[108:120]
     serializer = InfoSerializer(district, many = True)
     return Response(data = serializer.data, status = status.HTTP_200_OK)
 
