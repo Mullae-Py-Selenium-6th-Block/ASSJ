@@ -38,10 +38,14 @@ function App() {
       return;
     }
     axios
-      .get("http://43.201.96.246/assj/" + String(selectedGu[0]) + "/")
+      .get("http://127.0.0.1:8000/assj/" + String(selectedGu[0]) + "/")
       .then((response) => {
         setGraphData(response.data);
-        console.log(graphData);
+        response.data.map((elem, idx) => {
+          if (idx === 119) {
+            elem.price = response.data[118].nextprice;
+          }
+        });
       });
     openModal();
   }, [selectedGu]);
@@ -50,13 +54,13 @@ function App() {
     console.log(isClicked);
     if (isClicked === false) {
       axios
-        .get("http://43.201.96.246/assj/ranking/order/1/")
+        .get("http://127.0.0.1:8000/assj/ranking/order/1/")
         .then((response) => {
           setRankingData(response.data?.data);
         });
     } else if (isClicked === true) {
       axios
-        .get("http://43.201.96.246/assj/ranking/order/0/")
+        .get("http://127.0.0.1:8000/assj/ranking/order/0/")
         .then((response) => {
           setRankingData(response.data?.data);
         });
@@ -64,13 +68,12 @@ function App() {
   }, [isClicked]);
 
   useEffect(() => {
-    console.log(detailGu);
     if (detailGu[0] === -1) {
       return;
     }
     axios
       .get(
-        "http://43.201.96.246/assj/ranking/" +
+        "http://127.0.0.1:8000/assj/ranking/" +
           String(detailGu[0]) +
           "/?format=json"
       )
