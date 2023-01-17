@@ -4,7 +4,6 @@ import "./DetailModal.css";
 import { formatter } from "../../React_Data/Data";
 
 const DetailModal = ({ open, close, detailGu, detailData }) => {
-  console.log(detailData)
   // 예측가격:predictprice
   // 평균매매가격: price
   // 미분양: unsold
@@ -12,7 +11,7 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
   //총인구수:
   //총세대 수: totalhousenums
   //매매거래량: tradingvolume
-  const [category, setCategory] = useState(-1);
+  const [category, setCategory] = useState(0);
   const price = [];
   const predictprice = [];
   const totalhousenums = [];
@@ -80,10 +79,10 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
       });
     } else {
       dataTemp = price;
-      if (dataTemp.length !== 0){
-        dataTemp[detailData.length - 1].y1 = detailData[detailData.length - 2].nextprice;
+      if (dataTemp.length !== 0) {
+        dataTemp[detailData.length - 1].y1 =
+          detailData[detailData.length - 2].nextprice;
       }
-  
 
       dataDomain = [619500, 2312300];
       dataUnit = "단위: (천원)";

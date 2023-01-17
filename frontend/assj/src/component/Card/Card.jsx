@@ -47,7 +47,10 @@ function CompactCard({ rankingData, color, setDetail }) {
         }}
       >
         <div className="Name">
-          <img src={idx === 0 ? first : idx === 2 ? second : third} />
+          <img
+            className="rank-img"
+            src={idx === 0 ? first : idx === 1 ? second : third}
+          />
           {data[1]}
         </div>
         <div className="Percent info">

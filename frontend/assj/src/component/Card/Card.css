@@ -69,7 +69,9 @@
 
 .Name {
   display: flex;
+  justify-content: center;
   background: #d9d9d9;
+  align-items: center;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 800;
@@ -82,4 +84,9 @@
   text-align: center;
 
   color: #000000;
+}
+
+.rank-img {
+  height: 40px;
+  margin-right: 10px;
 }

@@ -13,7 +13,6 @@ import {
 } from "recharts";
 
 const Chart = ({ unit, usageStatus, domain }) => {
-  console.log(usageStatus);
   return (
     <>
       <div className="unit-chart">
