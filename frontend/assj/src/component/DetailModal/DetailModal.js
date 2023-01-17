@@ -23,7 +23,7 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
     price.push({
       x: detailData[i].date,
       y: detailData[i].price,
-      y1: detailData[i].nextprice,
+      y1: detailData[i].price,
     });
     totalhousenums.push({
       x: detailData[i].date,
@@ -80,6 +80,11 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
       });
     } else {
       dataTemp = price;
+      if (dataTemp.length !== 0){
+        dataTemp[detailData.length - 1].y1 = detailData[detailData.length - 2].nextprice;
+      }
+  
+
       dataDomain = [619500, 2312300];
       dataUnit = "단위: (천원)";
       datainfo =

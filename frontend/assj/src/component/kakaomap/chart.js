@@ -18,12 +18,12 @@ export default function Chart({ graphData }) {
       data={graphData}
     >
       <CartesianGrid strokeDasharray="5 5" />
-      <XAxis dataKey="after_date" />
+      <XAxis dataKey="date" />
       <YAxis />
       <Tooltip />
       <Area
         type="monotone"
-        dataKey="predictprice"
+        dataKey="price"
         stroke="#6D8B74"
         fill="#6D8B74"
       />

@@ -2,7 +2,8 @@ import React from "react";
 import Chart from "./chart";
 import "./modal.css";
 
-const Modal = ({ open, close, selectedGu, setSelectedGu, graphData }) => {
+const Modal = ({ open, close, selectedGu, setSelectedGu, graphData, set }) => {
+
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
     <div className={open ? "openModal modal" : "modal"}>

@@ -21,12 +21,12 @@ class DistrictSerializer(serializers.ModelSerializer):
 
 class PredictSerializer(serializers.ModelSerializer):
 
-    after_date = serializers.SerializerMethodField()
+    # after_date = serializers.SerializerMethodField()
 
-    def get_after_date(self, obj):
-        after_date = (obj.date + relativedelta(months=1)).strftime('%Y-%m-%d')
-        return after_date
+    # def get_after_date(self, obj):
+    #     after_date = (obj.date + relativedelta(months=1)).strftime('%Y-%m-%d')
+    #     return after_date
 
     class Meta:
         model = TbInfo
-        fields = ('districtname', 'after_date', 'nextprice')
+        fields = ('districtname', 'price','date', 'nextprice')
