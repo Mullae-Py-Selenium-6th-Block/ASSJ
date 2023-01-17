@@ -4,15 +4,15 @@ from prediction.models import TbInfo, TbDistrict
 from dateutil.relativedelta import relativedelta
 
 class InfoSerializer(serializers.ModelSerializer):
-    date = serializers.SerializerMethodField()
+    # date = serializers.SerializerMethodField()
 
-    def get_date(self, obj):
-        date = (obj.date + relativedelta(months=1)).strftime('%Y-%m-%d')
-        return date
+    # def get_date(self, obj):
+    #     date = (obj.date + relativedelta(months=1)).strftime('%Y-%m-%d')
+    #     return date
 
     class Meta:
         model = TbInfo
-        fields = ('districtid', 'districtname', 'date', 'price', 'predictprice', 'totalhousenums', 'averageprice', 'tradingvolume', 'ratio', 'totalproduction', 'convertrate', 'changerate', 'purchasepower', 'actualpriceindex')
+        fields = ('districtid', 'districtname', 'date', 'price', 'nextprice', 'totalhousenums', 'averageprice', 'tradingvolume', 'ratio', 'totalproduction', 'convertrate', 'changerate', 'purchasepower', 'actualpriceindex')
     
 class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,4 +29,4 @@ class PredictSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TbInfo
-        fields = ('districtname', 'after_date', 'predictprice')
+        fields = ('districtname', 'after_date', 'nextprice')

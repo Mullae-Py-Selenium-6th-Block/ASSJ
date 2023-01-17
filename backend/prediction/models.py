@@ -268,7 +268,7 @@ class TbInfo(models.Model):
     purchasepower = models.FloatField(db_column='PurchasePower', blank=True, null=True)  # Field name made lowercase.
     actualpriceindex = models.FloatField(db_column='ActualPriceIndex', blank=True, null=True)  # Field name made lowercase.
     price = models.IntegerField(db_column='Price', blank=True, null=True)  # Field name made lowercase.
-    predictprice = models.IntegerField(db_column='PredictPrice', blank=True, null=True)  # Field name made lowercase.
+    nextprice = models.IntegerField(db_column='NextPrice', blank=True, null=True)  # Field name made lowercase.
     m2 = models.FloatField(db_column='M2', blank=True, null=True)  # Field name made lowercase.
     baserate = models.FloatField(db_column='BaseRate', blank=True, null=True)  # Field name made lowercase.
     dollar = models.FloatField(db_column='Dollar', blank=True, null=True)  # Field name made lowercase.

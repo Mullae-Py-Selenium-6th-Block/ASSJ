@@ -4,6 +4,7 @@ import "./DetailModal.css";
 import { formatter } from "../../React_Data/Data";
 
 const DetailModal = ({ open, close, detailGu, detailData }) => {
+  console.log(detailData)
   // 예측가격:predictprice
   // 평균매매가격: price
   // 미분양: unsold
@@ -22,7 +23,7 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
     price.push({
       x: detailData[i].date,
       y: detailData[i].price,
-      y1: detailData[i].predictprice,
+      y1: detailData[i].nextprice,
     });
     totalhousenums.push({
       x: detailData[i].date,
@@ -34,6 +35,8 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
     });
     convertrate.push({ x: detailData[i].date, y: detailData[i].convertrate });
   }
+  // price[-1].y1 = detailData[-1].nextprice;
+
   var dataTemp = price;
   var dataDomain = [];
   var dataUnit = "";
@@ -83,7 +86,7 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
         "한 달간 해당 자치구에 올라온 아파트 매물의 매매 가격을 모두 더한 뒤에 전체 매물의 수로 나눈 값";
       setColumns(["날짜", "평균 매매가"]);
       tableD = detailData.map((detail) => {
-        return [detail.date, detail.predictprice];
+        return [detail.date, detail.price];
       });
     }
     setUsageStatus(dataTemp);
