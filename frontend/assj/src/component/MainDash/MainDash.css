@@ -11,7 +11,7 @@
   width: 1000px;
   overflow: hidden;
   border-radius: 10px;
-  margin-left: 75px;
+  margin-left: 5rem;
   justify-content: center;
   /* min-height: 220px; */
 }
@@ -119,6 +119,8 @@
   height: 30px;
   border-radius: 10px;
   padding: 3px;
+  font-size: 15px;
+  font-weight: bold;
 }
 .infoeco {
   color: white;

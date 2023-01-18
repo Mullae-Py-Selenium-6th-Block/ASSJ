@@ -5,9 +5,7 @@ import pic from "./yoon.png";
 import { SidebarData } from "../../React_Data/Data";
 import { Link } from "react-router-dom";
 
-const Sidebar = () => {
-  const [selected, setSelected] = useState(0);
-
+const Sidebar = ({ sideSelected, setSideSelected }) => {
   return (
     <div className="Sidebar">
       <div className="logo">
@@ -23,9 +21,11 @@ const Sidebar = () => {
             <Link
               to={item.to}
               style={{ color: "inherit", textDecoration: "inherit" }}
-              className={selected === index ? "menuItem active" : "menuItem"}
+              className={
+                sideSelected === index ? "menuItem active" : "menuItem"
+              }
               key={index}
-              onClick={() => setSelected(index)}
+              onClick={() => setSideSelected(index)}
             >
               <item.icon />
               <span>{item.heading}</span>

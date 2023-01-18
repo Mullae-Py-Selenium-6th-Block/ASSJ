@@ -3,7 +3,7 @@ import Chart from "../Chart/DetailChart";
 import "./DetailModal.css";
 import { formatter } from "../../React_Data/Data";
 
-const DetailModal = ({ open, close, detailGu, detailData }) => {
+const DetailModal = ({ open, close, detailGu, detailData, detailDataList }) => {
   // 예측가격:predictprice
   // 평균매매가격: price
   // 미분양: unsold
@@ -11,30 +11,11 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
   //총인구수:
   //총세대 수: totalhousenums
   //매매거래량: tradingvolume
-  const [category, setCategory] = useState(0);
-  const price = [];
-  const predictprice = [];
-  const totalhousenums = [];
-  const tradingvolume = [];
-  const convertrate = [];
-  // const predictpricelist = [];
-  for (let i = 0; i < detailData.length; i++) {
-    price.push({
-      x: detailData[i].date,
-      y: detailData[i].price,
-      y1: detailData[i].price,
-    });
-    totalhousenums.push({
-      x: detailData[i].date,
-      y: detailData[i].totalhousenums,
-    });
-    tradingvolume.push({
-      x: detailData[i].date,
-      y: detailData[i].tradingvolume,
-    });
-    convertrate.push({ x: detailData[i].date, y: detailData[i].convertrate });
-  }
-  // price[-1].y1 = detailData[-1].nextprice;
+  const [category, setCategory] = useState(-1);
+  const price = detailDataList[0];
+  const totalhousenums = detailDataList[1];
+  const tradingvolume = detailDataList[2];
+  const convertrate = detailDataList[3];
 
   var dataTemp = price;
   var dataDomain = [];
@@ -77,13 +58,10 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
       tableD = detailData.map((detail) => {
         return [detail.date, detail.totalhousenums];
       });
+    } else if (category === -1) {
+      datainfo = "확인하고 싶은 자료의 버튼을 클릭해주세요.";
     } else {
       dataTemp = price;
-      if (dataTemp.length !== 0) {
-        dataTemp[detailData.length - 1].y1 =
-          detailData[detailData.length - 2].nextprice;
-      }
-
       dataDomain = [619500, 2312300];
       dataUnit = "단위: (천원)";
       datainfo =
@@ -114,47 +92,89 @@ const DetailModal = ({ open, close, detailGu, detailData }) => {
           <main>
             <div>
               <button
-                className={"cateButton" + (category === 0 ? " activecate" : "")}
+                className={
+                  "cateButton" +
+                  (category === 0
+                    ? " activecate"
+                    : category === -1
+                    ? " init"
+                    : "")
+                }
                 onClick={() => setCategory(0)}
                 key={0}
               >
                 예측가격
               </button>
               <button
-                className={"cateButton" + (category === 1 ? " activecate" : "")}
+                className={
+                  "cateButton" +
+                  (category === 1
+                    ? " activecate"
+                    : category === -1
+                    ? " init"
+                    : "")
+                }
                 onClick={() => setCategory(1)}
                 key={1}
               >
                 거래량
               </button>
               <button
-                className={"cateButton" + (category === 3 ? " activecate" : "")}
+                className={
+                  "cateButton" +
+                  (category === 3
+                    ? " activecate"
+                    : category === -1
+                    ? " init"
+                    : "")
+                }
                 onClick={() => setCategory(3)}
                 key={3}
               >
                 총 세대수
               </button>
               <button
-                className={"cateButton" + (category === 2 ? " activecate" : "")}
+                className={
+                  "cateButton" +
+                  (category === 2
+                    ? " activecate"
+                    : category === -1
+                    ? " init"
+                    : "")
+                }
                 onClick={() => setCategory(2)}
                 key={2}
               >
                 전월세전환율
               </button>
             </div>
-
-            <Table
-              className="table"
-              columns={columns}
-              tableData={tableData}
-              infoText={infoText}
-            />
-            <Chart
-              className="chart"
-              unit={unit}
-              domain={domain}
-              usageStatus={usageStatus}
-            />
+            <div>
+              {category === -1 ? (
+                <div className="initial-button">
+                  <div className="init-info">{infoText}</div>
+                </div>
+              ) : (
+                <div className="info-box">
+                  <div className="info-text">{infoText}</div>
+                  <div className="month">최근 11개월</div>
+                  <div className="table-chart">
+                    <Table
+                      className="table"
+                      columns={columns}
+                      tableData={tableData}
+                      infoText={infoText}
+                    />
+                    <Chart
+                      category={category}
+                      className="chart"
+                      unit={unit}
+                      domain={domain}
+                      usageStatus={usageStatus}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
           </main>
           <footer>
             <button className="close" onClick={close}>
@@ -171,12 +191,10 @@ function Table({ columns, tableData, infoText }) {
   // const reverse = [...tableData].reverse();
   return (
     <>
-      <div className="info-text">{infoText}</div>
-      <div className="month-container">
-        <div className="month">최근 11개월</div>
-      </div>
       <table className="table-container">
-        <col width="100px" />
+        <colgroup>
+          <col width="100px" />
+        </colgroup>
         <thead>
           <tr>
             {columns.map((column) => (

@@ -17,10 +17,14 @@ function App() {
 
   const [detailGu, setDetailGu] = useState([-1, ""]); //2번 페이지 클릭된 구
   const [detailData, setDetail] = useState([]); //2번 페이지 클릭된 구 데이터
+  const [detailDataList, setDetailList] = useState([]); //2번 페이지 클릭된 구 데이터
 
   const [modalOpen, setState] = useState(false); //1번페이지 모달 창 state
   const [DetailOpen, setDetailiOpenState] = useState(false); //1번페이지 모달 창 state
 
+  const [pageSide, setPageSide] = useState("http://localhost:3000/");
+  const [sideSelected, setSideSelected] = useState(0);
+  const [economics, setEconomics] = useState([]);
   const openModal = () => {
     setState(true);
   };
@@ -33,6 +37,19 @@ function App() {
   const closeDetail = () => {
     setDetailiOpenState(false);
   };
+
+  useEffect(() => {
+    var link = document.location.href;
+    if (link === "http://localhost:3000/") {
+      setSideSelected(0);
+    } else {
+      axios.get("http://127.0.0.1:8000/assj/economics/").then((response) => {
+        setEconomics(response.data.data[0]);
+      });
+      setSideSelected(1);
+    }
+  }, [pageSide]);
+
   useEffect(() => {
     if (selectedGu[0] === -1) {
       return;
@@ -46,8 +63,8 @@ function App() {
             elem.price = response.data[118].nextprice;
           }
         });
+        openModal();
       });
-    openModal();
   }, [selectedGu]);
 
   useEffect(() => {
@@ -78,7 +95,43 @@ function App() {
           "/?format=json"
       )
       .then((response) => {
-        setDetail(response.data);
+        console.log(detailGu);
+        const price = [];
+        const totalhousenums = [];
+        const tradingvolume = [];
+        const convertrate = [];
+        const responsedata = response.data;
+        console.log(responsedata.length);
+        for (let i = 0; i < responsedata.length; i++) {
+          price.push({
+            x: responsedata[i].date,
+            y: responsedata[i].price,
+            y1: responsedata[i].price,
+          });
+          if (responsedata[i].totalhousenums !== null) {
+            totalhousenums.push({
+              x: responsedata[i].date,
+              y: responsedata[i].totalhousenums,
+            });
+          }
+          if (responsedata[i].tradingvolume !== null) {
+            tradingvolume.push({
+              x: responsedata[i].date,
+              y: responsedata[i].tradingvolume,
+            });
+          }
+          if (responsedata[i].tradingvolume !== null) {
+            convertrate.push({
+              x: responsedata[i].date,
+              y: responsedata[i].convertrate,
+            });
+          }
+        }
+
+        price[price.length - 1].y1 =
+          responsedata[responsedata.length - 2].nextprice;
+        setDetail(responsedata);
+        setDetailList([price, totalhousenums, tradingvolume, convertrate]);
         openDetail();
       });
   }, [detailGu]);
@@ -87,7 +140,10 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <div className="AppGlass">
-          <Sidebar />
+          <Sidebar
+            sideSelected={sideSelected}
+            setSideSelected={setSideSelected}
+          />
           <Routes>
             <Route
               path="/*"
@@ -99,6 +155,7 @@ function App() {
               path="/rank"
               element={
                 <MainDash
+                  economics={economics}
                   isClicked={isClicked}
                   setIsClicked={setIsClicked}
                   rankingData={rankingData}
@@ -121,6 +178,7 @@ function App() {
           close={closeDetail}
           detailGu={detailGu}
           detailData={detailData}
+          detailDataList={detailDataList}
         />
       </div>
     </BrowserRouter>

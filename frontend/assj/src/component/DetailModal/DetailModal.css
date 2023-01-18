@@ -15,7 +15,7 @@
 }
 .modalDetail > section {
   width: 90%;
-  max-width: 900px;
+  max-width: 1200px;
   max-height: 800px;
   margin: 0 auto;
   border-radius: 0.3rem;
@@ -82,7 +82,7 @@
   margin-bottom: 10px;
   width: 100px;
   color: #fff;
-  background-color: #a1b3a7;
+  background-color: #6d8b74;
   border-radius: 15px;
   font-size: 18px;
 }
@@ -114,14 +114,15 @@
   background-color: #d4dcd6;
   color: #6d8b74;
 }
-/* .month-table-container {
-} */
+
 .month {
+  padding: 8px;
   font-size: 13px;
   color: rgba(0, 0, 0, 0.5);
 }
 
 thead > tr > th {
+  height: 35px;
   font-weight: bold;
   font-size: 1em;
   text-align: center;
@@ -143,26 +144,23 @@ thead > tr {
 .table-container {
   text-align: center;
   overflow: hidden;
-  width: 80%;
+  width: 50%;
   margin: 0 auto;
   display: table;
   padding: 0 0 3em 0;
+  border-radius: 1.5rem;
+  table-layout: fixed;
 }
 .info-text {
   color: rgba(0, 0, 0, 0.3);
   font-size: smaller;
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 /* 
 .table-container td,
 .table-container th {
 } */
-
-.table-container {
-  border-radius: 1.2rem;
-  table-layout: fixed;
-}
 
 .table-container > tbody > tr {
   background-color: white;
@@ -177,14 +175,14 @@ thead > tr {
   background-color: #ebe9ad;
   color: #403e10;
   font-weight: bold;
-  box-shadow: #7f7c21 -1px 1px, #7f7c21 -2px 2px, #7f7c21 -3px 3px,
+  /* box-shadow: #7f7c21 -1px 1px, #7f7c21 -2px 2px, #7f7c21 -3px 3px,
     #7f7c21 -4px 4px, #7f7c21 -5px 5px, #7f7c21 -6px 6px;
   transform: translate3d(6px, -6px, 0);
 
   transition-delay: 0s;
   transition-duration: 0.4s;
   transition-property: all;
-  transition-timing-function: line;
+  transition-timing-function: line; */
 }
 .table-container > tbody > tr:last-child {
   background-color: #d4dcd6;
@@ -194,4 +192,30 @@ thead > tr {
   .table-container th:nth-child(4) {
     display: none;
   }
+}
+
+.table-chart {
+  display: flex;
+}
+
+.unit-chart {
+  display: flex;
+  justify-content: center;
+}
+
+.info-box {
+  justify-content: center;
+  text-align: center;
+}
+
+.init {
+  width: 100px;
+  height: 50px;
+}
+.init:hover {
+  background-color: #d4dcd6;
+}
+.init-info {
+  padding: 10px;
+  font-weight: bold;
 }

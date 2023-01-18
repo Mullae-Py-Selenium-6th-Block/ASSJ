@@ -11,17 +11,47 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { formatter } from "../../React_Data/Data";
 
-const Chart = ({ unit, usageStatus, domain }) => {
+const Chart = ({ unit, usageStatus, domain, category }) => {
+  var name = "";
+  var value = -1;
+  const CustomTooltip = ({ active, payload, label }) => {
+    // console.log("payload", payload); //you check payload
+    if (active && payload) {
+      if (category === 0) {
+        name = "가격";
+        value = "₩" + formatter.format(payload[0].payload.y * 1000);
+      } else if (category === 1) {
+        name = "거래량";
+        value = payload[0].payload.y;
+      } else if (category === 2) {
+        name = "전월세 전환율";
+        value = payload[0].payload.y;
+      } else if (category === 3) {
+        name = "총 세대 수";
+        value = formatter.format(payload[0].payload.y);
+      }
+      return (
+        <div className="tool-box">
+          <p>날짜: {payload[0].payload.x} </p>
+          <p>
+            {name} : {value}
+          </p>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  };
   return (
     <>
       <div className="unit-chart">
-        <div className="unit">{unit}</div>
-        <LineChart width={600} height={400} data={usageStatus}>
+        <LineChart width={400} height={350} data={usageStatus}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="x" style={{ width: "100%" }} />
           <YAxis domain={domain} />
-          <Tooltip />
+          <Tooltip content={<CustomTooltip />} />
           <Line
             type="monotone"
             dataKey="y"
@@ -30,7 +60,7 @@ const Chart = ({ unit, usageStatus, domain }) => {
           />
           <Line type="monotone" dataKey="y1" stroke="#FB5753" />
         </LineChart>
-        <div className="unit"></div>
+        <div className="unit">{unit}</div>
       </div>
     </>
   );

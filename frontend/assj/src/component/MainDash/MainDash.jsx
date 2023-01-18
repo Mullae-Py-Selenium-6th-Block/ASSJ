@@ -6,20 +6,20 @@ import axios from "axios";
 import RankingList from "../RankingList/RankingList";
 
 const MainDash = ({
+  economics,
   isClicked,
   setIsClicked,
   rankingData,
   detailGu,
   setDetail,
 }) => {
-  // var economicData = {};
-  // console.log(axios.get("http://43.201.96.246/assj/economics/"));
+  console.log(economics);
   return (
     <div className="MainDash">
       <div className="economic-info">
-        <div className="infoeco baserate">기준금리</div>
-        <div className="infoeco exchagerate">원/달러 환율</div>
-        <div className="infoeco m2">M2통화량</div>
+        <div className="infoeco baserate">기준금리: {economics[2]}</div>
+        <div className="infoeco exchagerate">원/달러 환율: {economics[1]}</div>
+        <div className="infoeco m2">M2통화량: {economics[0]}</div>
       </div>
       <div className="Top3">
         {/* <div>{economics}</div> */}
