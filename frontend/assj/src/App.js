@@ -68,7 +68,6 @@ function App() {
   }, [selectedGu]);
 
   useEffect(() => {
-    console.log(isClicked);
     if (isClicked === false) {
       axios
         .get("http://127.0.0.1:8000/assj/ranking/order/1/")
@@ -95,13 +94,11 @@ function App() {
           "/?format=json"
       )
       .then((response) => {
-        console.log(detailGu);
         const price = [];
         const totalhousenums = [];
         const tradingvolume = [];
         const convertrate = [];
         const responsedata = response.data;
-        console.log(responsedata.length);
         for (let i = 0; i < responsedata.length; i++) {
           price.push({
             x: responsedata[i].date,

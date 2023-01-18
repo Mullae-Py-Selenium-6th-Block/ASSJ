@@ -37,6 +37,11 @@ const Chart = ({ unit, usageStatus, domain, category }) => {
           <p>날짜: {payload[0].payload.x} </p>
           <p>
             {name} : {value}
+            {payload[0].payload.x !== "2022-12-01" ? (
+              ""
+            ) : (
+              <p>예측가: {formatter.format(payload[0].payload.y1 * 1000)}</p>
+            )}
           </p>
         </div>
       );
