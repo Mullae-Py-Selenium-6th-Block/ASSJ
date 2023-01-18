@@ -85,7 +85,13 @@ const DetailModal = ({ open, close, detailGu, detailData, detailDataList }) => {
         <section>
           <header>
             <span>{detailGu[1]}</span>
-            <button className="close" onClick={close}>
+            <button
+              className="close"
+              onClick={() => {
+                close();
+                setCategory(-1);
+              }}
+            >
               &times;
             </button>
           </header>
@@ -177,7 +183,13 @@ const DetailModal = ({ open, close, detailGu, detailData, detailDataList }) => {
             </div>
           </main>
           <footer>
-            <button className="close" onClick={close}>
+            <button
+              className="close"
+              onClick={() => {
+                close();
+                setCategory(-1);
+              }}
+            >
               close
             </button>
           </footer>
