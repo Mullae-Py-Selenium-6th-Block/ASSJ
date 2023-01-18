@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from prediction.models import TbInfo, TbDistrict, TbExchangerate, TbM2, TbBaserate, TbImg
+from prediction.models import TbInfo, TbDistrict, TbExchangerate, TbM2, TbBaserate
 from .serializers import InfoSerializer, DistrictSerializer, PredictSerializer
 
 from django.http import JsonResponse
@@ -29,11 +29,9 @@ def ranking_option(requests, ordertype):
 
     result = []
     info = TbInfo.objects.all()
-    img = TbImg.objects.all()
 
     for i in range(0,25,1):
         obj = info.filter(districtid=i)
-        obj_img = img.filter(districtid=i).last()
         # last_obj = obj.last()
         # rate = round((last_obj.nextprice - last_obj.price) / last_obj.price * 100, 2)
         # 11월에 예측한 12월 가격 증감율을 구하기 위한 코드
@@ -51,8 +49,8 @@ def ranking_option(requests, ordertype):
         else:
             light = 1
         
-        # districtid, districtname, 증감율, 가격, 예상가격, 통계신호등, svg
-        result.append([i, last_obj.districtname.districtname, rate, last_obj.price, last_obj.nextprice, light, obj_img.svg])
+        # districtid, districtname, 증감율, 가격, 예상가격, 통계신호등
+        result.append([i, last_obj.districtname.districtname, rate, last_obj.price, last_obj.nextprice, light])
     
     return JsonResponse({'data':sorted(result, key=lambda x : x[2] * (1 if ordertype else -1))}, safe=False, json_dumps_params={'ensure_ascii':False}) 
 

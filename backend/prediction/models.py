@@ -195,17 +195,6 @@ class TbForecastindex(models.Model):
         db_table = 'tb_forecastindex'
 
 
-class TbImg(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    districtname = models.ForeignKey(TbDistrict, models.DO_NOTHING, db_column='DistrictName', blank=True, null=True)  # Field name made lowercase.
-    districtid = models.IntegerField(db_column='DistrictID')  # Field name made lowercase.
-    svg = models.TextField(db_column='SVG', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'tb_img'
-
-
 class TbInfo(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     districtname = models.ForeignKey(TbDistrict, models.DO_NOTHING, db_column='DistrictName')  # Field name made lowercase.
