@@ -64,9 +64,13 @@ def ranking_info(requests, districtid):
 
 @api_view(['GET'])
 def economics(requests):
+    economicvalues = []
+
     m2 = TbM2.objects.all().last().m2
     dollar = TbExchangerate.objects.all().last().dollar
     baserate = TbBaserate.objects.all().last().baserate
+    
+    economicvalues.append([m2, dollar, baserate])
 
-    return JsonResponse({'M2 통화량': m2, '원/달러 환율': dollar, '기준 금리': baserate}, safe=False, json_dumps_params={'ensure_ascii':False}) 
+    return JsonResponse({'data': economicvalues}, safe=False, json_dumps_params={'ensure_ascii':False}) 
 
