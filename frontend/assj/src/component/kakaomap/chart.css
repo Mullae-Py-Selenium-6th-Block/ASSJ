@@ -1,0 +1,11 @@
+.graph-box {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.recharts-surface {
+  margin-top: 20px;
+}
+tspan {
+  font-size: small;
+}

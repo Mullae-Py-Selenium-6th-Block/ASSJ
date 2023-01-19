@@ -1,0 +1,23 @@
+.graph-box {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.recharts-surface {
+  margin-top: 20px;
+}
+tspan {
+  font-size: smaller;
+}
+.recharts-wrapper {
+  width: fit-content;
+  justify-content: center;
+}
+
+.unit-chart {
+  display: flex;
+}
+.unit {
+  font-size: 10px;
+  width: 50px;
+}

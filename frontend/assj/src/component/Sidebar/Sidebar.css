@@ -1,0 +1,123 @@
+.Sidebar {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  position: relative;
+  padding: 1rem;
+  transition: all 300ms ease;
+  background-color: #a2b4a7;
+}
+
+.Sidebar > div {
+  color: #ffffff;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+}
+
+.Sidebar > div:nth-child(2) {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 25px;
+  line-height: 38px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.Sidebar > div:nth-child(3) {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 9px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.Sidebar > div:nth-child(8) {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 15px;
+  padding-top: 0.7rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.Sidebar > div:nth-child(9) {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+.yoon {
+  padding-left: 1.5rem;
+  padding-top: 3.5rem;
+  padding-right: 1.5rem;
+}
+
+.category {
+  padding-bottom: 10rem;
+}
+
+hr {
+  width: 10rem;
+  align-items: center;
+  height: 0px;
+  border: 0.5px solid #ffffff;
+}
+
+/* menu */
+.menu {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 2.5rem;
+  margin-left: 2rem;
+  position: relative;
+  transition: all 300ms ease;
+  font-size: 14px;
+  border-radius: 0.7rem;
+}
+
+.menuItem:hover {
+  cursor: pointer;
+}
+
+.active {
+  background: var(--activeItem);
+  margin-left: 0;
+}
+
+.active::before {
+  content: "";
+  width: 8px;
+  height: 100%;
+  /* background: var(--activeItem); */
+  margin-right: calc(--);
+}

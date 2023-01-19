@@ -1,0 +1,52 @@
+.select-menu {
+  position: relative;
+  height: 150px;
+  width: 96%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  margin-top: 18px;
+  margin-left: 15px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+}
+
+.select-box {
+  margin-top: 18px;
+  text-align: left;
+  margin-bottom: 18px;
+}
+#map-logo {
+  padding: 25px;
+}
+.container {
+  text-align: left;
+}
+
+.jachigu {
+  font-size: 18px;
+  font-weight: 700;
+  color: #283d59;
+}
+
+.ganada {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+  text-align: center;
+  width: 64px;
+  height: 25px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  background-color: white;
+  border: 0px solid;
+  font-weight: 500;
+}
+
+.buttonactive {
+  background-color: #74917b;
+  color: white;
+}
