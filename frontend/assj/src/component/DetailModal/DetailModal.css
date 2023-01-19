@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans+KR&display=swap");
+.modalDetail {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  font-family: "Noto Sans KR", sans-serif;
+}
+.modalDetail button {
+  outline: none;
+  cursor: pointer;
+  border: 0;
+}
+.modalDetail > section {
+  width: 90%;
+  max-width: 1200px;
+  max-height: 800px;
+  margin: 0 auto;
+  border-radius: 0.3rem;
+  background-color: white;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modalDetail-show 0.3s;
+  overflow: scroll;
+}
+.modalDetail > section > header {
+  position: relative;
+  height: 10px;
+  padding: 20px 64px 16px 16px;
+  background-color: inherit;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+.modalDetail > section > header span {
+  text-align: center;
+  font-size: 25px;
+  margin-left: 10px;
+  color: #5f7161;
+}
+.modalDetail > section > header button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
+  background-color: #6d8b74;
+}
+.modalDetail > section > main {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border-bottom: 1px solid #dee2e6; */
+  border-top: 0.5px solid #5f7161;
+}
+
+.cateButton {
+  background-color: #6d8b74;
+  color: #fff;
+  height: 25px;
+  border-radius: 4px;
+  margin: 5px;
+}
+
+.cateButton:active {
+  color: #6d8b74;
+}
+.modalDetail > section > footer {
+  display: flex;
+  justify-content: center;
+  padding: 12px 16px;
+  text-align: right;
+}
+.modalDetail > section > footer button {
+  padding: 6px 12px;
+  margin-bottom: 10px;
+  width: 100px;
+  color: #fff;
+  background-color: #6d8b74;
+  border-radius: 15px;
+  font-size: 18px;
+}
+.modalDetail.openDetailModal {
+  display: flex;
+  align-items: center;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modalDetail-bg-show 0.3s;
+}
+@keyframes modalDetail-show {
+  from {
+    opacity: 0;
+    margin-top: -50px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+@keyframes modalDetail-bg-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.activecate {
+  background-color: #d4dcd6;
+  color: #6d8b74;
+}
+
+.month {
+  padding: 8px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+thead > tr > th {
+  height: 35px;
+  font-weight: bold;
+  font-size: 1em;
+  text-align: center;
+  color: white;
+}
+
+thead > tr {
+  background-color: #6d8b74;
+}
+
+.table-container {
+  font-weight: normal;
+  font-size: 1em;
+  /* -webkit-box-shadow: 0 1px 1px -2px #0e1119;
+  -moz-box-shadow: 0 2px 2px -2px #0e1119; */
+  /* box-shadow: 0 1px 1px -1px #0e1119; */
+}
+table-container > tbody {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.table-container {
+  text-align: center;
+  overflow: hidden;
+  width: 50%;
+  margin: 0 auto;
+  display: table;
+  padding: 0 0 3em 0;
+  border-radius: 1.5rem;
+  table-layout: fixed;
+}
+.info-text {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: smaller;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+/* 
+.table-container td,
+.table-container th {
+} */
+
+.table-container > tbody > tr {
+  background-color: white;
+}
+
+.table-container td {
+  border-bottom: 0.3px solid rgba(0, 0, 0, 0.3);
+}
+.table-container td:last-child {
+  color: #ff0022;
+  font-weight: bold;
+}
+
+.table-container td:hover {
+  background-color: #ebe9ad;
+  color: #403e10;
+  font-weight: bold;
+  /* box-shadow: #7f7c21 -1px 1px, #7f7c21 -2px 2px, #7f7c21 -3px 3px,
+    #7f7c21 -4px 4px, #7f7c21 -5px 5px, #7f7c21 -6px 6px;
+  transform: translate3d(6px, -6px, 0);
+
+  transition-delay: 0s;
+  transition-duration: 0.4s;
+  transition-property: all;
+  transition-timing-function: line; */
+}
+
+@media (max-width: 800px) {
+  .table-container td:nth-child(4),
+  .table-container th:nth-child(4) {
+    display: none;
+  }
+}
+
+.table-chart {
+  display: flex;
+}
+
+.unit-chart {
+  display: flex;
+  justify-content: center;
+}
+
+.info-box {
+  justify-content: center;
+  text-align: center;
+}
+
+.init {
+  width: 100px;
+  height: 50px;
+}
+.init:hover {
+  background-color: #d4dcd6;
+}
+.init-info {
+  padding: 10px;
+  font-weight: bold;
+}
