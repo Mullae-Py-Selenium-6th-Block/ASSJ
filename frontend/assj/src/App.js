@@ -22,8 +22,10 @@ function App() {
   const [modalOpen, setState] = useState(false); //1번페이지 모달 창 state
   const [DetailOpen, setDetailiOpenState] = useState(false); //1번페이지 모달 창 state
 
-  const [pageSide, setPageSide] = useState("http://localhost:3000/");
-  const [sideSelected, setSideSelected] = useState(0);
+  const [pageSide, setPageSide] = useState("http://43.201.96.246/");
+  const [sideSelected, setSideSelected] = useState(
+    document.location.href === "http://43.201.96.246/" ? 0 : 1
+  );
   const [economics, setEconomics] = useState([]);
   const openModal = () => {
     setState(true);
@@ -39,16 +41,17 @@ function App() {
   };
 
   useEffect(() => {
+    console.log("바뀜");
     var link = document.location.href;
     if (link === "http://43.201.96.246/") {
       setSideSelected(0);
     } else {
+      setSideSelected(1);
       axios.get("http://43.201.96.246/assj/economics/").then((response) => {
         setEconomics(response.data.data[0]);
       });
-      setSideSelected(1);
     }
-  }, [pageSide]);
+  }, [document.location.href]);
 
   useEffect(() => {
     if (selectedGu[0] === -1) {

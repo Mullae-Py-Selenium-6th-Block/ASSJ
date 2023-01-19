@@ -5,7 +5,15 @@ import pic from "./yoon.png";
 import { SidebarData } from "../../React_Data/Data";
 import { Link } from "react-router-dom";
 
-const Sidebar = ({ sideSelected, setSideSelected }) => {
+const Sidebar = ({ sideSelected }) => {
+  const sideSet = (e) => {
+    if (e.target.outerText === "자치구 지도") {
+      window.location.href = "/";
+    } else {
+      window.location.href = "/rank";
+    }
+  };
+
   return (
     <div className="Sidebar">
       <div className="logo">
@@ -25,7 +33,7 @@ const Sidebar = ({ sideSelected, setSideSelected }) => {
                 sideSelected === index ? "menuItem active" : "menuItem"
               }
               key={index}
-              onClick={() => setSideSelected(index)}
+              onClick={sideSet}
             >
               <item.icon />
               <span>{item.heading}</span>

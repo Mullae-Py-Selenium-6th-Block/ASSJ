@@ -13,7 +13,6 @@ const MainDash = ({
   detailGu,
   setDetail,
 }) => {
-  console.log(economics);
   return (
     <div className="MainDash">
       <div className="economic-info">
