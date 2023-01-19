@@ -40,10 +40,10 @@ function App() {
 
   useEffect(() => {
     var link = document.location.href;
-    if (link === "http://localhost:3000/") {
+    if (link === "http://43.201.96.246/") {
       setSideSelected(0);
     } else {
-      axios.get("http://127.0.0.1:8000/assj/economics/").then((response) => {
+      axios.get("http://43.201.96.246/assj/economics/").then((response) => {
         setEconomics(response.data.data[0]);
       });
       setSideSelected(1);
@@ -55,7 +55,7 @@ function App() {
       return;
     }
     axios
-      .get("http://127.0.0.1:8000/assj/" + String(selectedGu[0]) + "/")
+      .get("http://43.201.96.246/assj/" + String(selectedGu[0]) + "/")
       .then((response) => {
         setGraphData(response.data);
         response.data.map((elem, idx) => {
@@ -70,13 +70,13 @@ function App() {
   useEffect(() => {
     if (isClicked === false) {
       axios
-        .get("http://127.0.0.1:8000/assj/ranking/order/1/")
+        .get("http://43.201.96.246/assj/ranking/order/1/")
         .then((response) => {
           setRankingData(response.data?.data);
         });
     } else if (isClicked === true) {
       axios
-        .get("http://127.0.0.1:8000/assj/ranking/order/0/")
+        .get("http://43.201.96.246/assj/ranking/order/0/")
         .then((response) => {
           setRankingData(response.data?.data);
         });
@@ -89,7 +89,7 @@ function App() {
     }
     axios
       .get(
-        "http://127.0.0.1:8000/assj/ranking/" +
+        "http://43.201.96.246/assj/ranking/" +
           String(detailGu[0]) +
           "/?format=json"
       )
