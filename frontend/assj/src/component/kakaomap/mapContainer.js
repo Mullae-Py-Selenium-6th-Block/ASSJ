@@ -27796,11 +27796,11 @@ function MapContainer({ selectedGu, setSelectedGu }) {
         }}
         style={{
           // 지도의 크기
-          width: "100%",
+          width: "95%",
           height: "600px",
         }}
         level={9} // 지도의 확대 레벨
-        draggable={false}
+        draggable={true}
       >
         {areas.map((area, index) => (
           <Polygon
