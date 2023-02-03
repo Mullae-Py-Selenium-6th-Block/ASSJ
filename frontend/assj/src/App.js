@@ -22,9 +22,8 @@ function App() {
   const [modalOpen, setState] = useState(false); //1번페이지 모달 창 state
   const [DetailOpen, setDetailiOpenState] = useState(false); //1번페이지 모달 창 state
 
-  const [pageSide, setPageSide] = useState("http://43.201.96.246/");
   const [sideSelected, setSideSelected] = useState(
-    document.location.href === "http://43.201.96.246/" ? 0 : 1
+    document.location.href === "http://localhost:3000/" ? 0 : 1
   );
   const [economics, setEconomics] = useState([]);
   const openModal = () => {
@@ -43,11 +42,11 @@ function App() {
   useEffect(() => {
     console.log("바뀜");
     var link = document.location.href;
-    if (link === "http://43.201.96.246/") {
+    if (link === "http://localhost:3000/") {
       setSideSelected(0);
     } else {
       setSideSelected(1);
-      axios.get("http://43.201.96.246/assj/economics/").then((response) => {
+      axios.get("http://127.0.0.1:8000/assj/economics/").then((response) => {
         setEconomics(response.data.data[0]);
       });
     }
@@ -58,7 +57,7 @@ function App() {
       return;
     }
     axios
-      .get("http://43.201.96.246/assj/" + String(selectedGu[0]) + "/")
+      .get("http://127.0.0.1:8000/assj/" + String(selectedGu[0]) + "/")
       .then((response) => {
         setGraphData(response.data);
         response.data.map((elem, idx) => {
@@ -73,13 +72,13 @@ function App() {
   useEffect(() => {
     if (isClicked === false) {
       axios
-        .get("http://43.201.96.246/assj/ranking/order/1/")
+        .get("http://127.0.0.1:8000/assj/ranking/order/1/")
         .then((response) => {
           setRankingData(response.data?.data);
         });
     } else if (isClicked === true) {
       axios
-        .get("http://43.201.96.246/assj/ranking/order/0/")
+        .get("http://127.0.0.1:8000/assj/ranking/order/0/")
         .then((response) => {
           setRankingData(response.data?.data);
         });
@@ -92,7 +91,7 @@ function App() {
     }
     axios
       .get(
-        "http://43.201.96.246/assj/ranking/" +
+        "http://127.0.0.1:8000/assj/ranking/" +
           String(detailGu[0]) +
           "/?format=json"
       )
