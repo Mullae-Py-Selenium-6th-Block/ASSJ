@@ -26,6 +26,7 @@
   display: grid;
   height: 90%;
   width: 95%;
+  padding: 2rem;
   border-radius: 1rem;
   background-color: #fff;
   overflow: hidden;

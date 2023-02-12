@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Logo from "../../img/Logo.png";
+import Logo from "../../assets/img/Logo.png";
 import "./Sidebar.css";
 import pic from "./yoon.png";
-import { SidebarData } from "../../React_Data/Data";
+import { SidebarData } from "../../assets/React_Data/Data";
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ sideSelected }) => {

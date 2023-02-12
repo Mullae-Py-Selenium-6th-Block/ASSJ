@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Chart from "../Chart/DetailChart";
 import "./DetailModal.css";
-import { formatter } from "../../React_Data/Data";
+import { formatter } from "../../assets/React_Data/Data";
 
 const DetailModal = ({ open, close, detailGu, detailData, detailDataList }) => {
   // 예측가격:predictprice

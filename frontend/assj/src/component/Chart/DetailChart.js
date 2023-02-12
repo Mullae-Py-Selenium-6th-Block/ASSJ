@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { formatter } from "../../React_Data/Data";
+import { formatter } from "../../assets/React_Data/Data";
 
 const Chart = ({ unit, usageStatus, domain, category }) => {
   var name = "";
