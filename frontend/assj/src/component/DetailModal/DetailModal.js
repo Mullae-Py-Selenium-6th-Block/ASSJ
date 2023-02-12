@@ -209,7 +209,7 @@ function Table({ columns, tableData, infoText }) {
         </colgroup>
         <thead>
           <tr>
-            {columns.map((column) => (
+            {columns.map((column, idx) => (
               <th key={column}>{column}</th>
             ))}
           </tr>
