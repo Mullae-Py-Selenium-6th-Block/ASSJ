@@ -8,7 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { formatter } from "../../React_Data/Data";
+import { formatter } from "../../assets/React_Data/Data";
 
 const CustomTooltip = ({ active, payload, label }) => {
   // console.log("payload", payload); //you check payload

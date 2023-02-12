@@ -26,14 +26,9 @@
   display: grid;
   height: 90%;
   width: 95%;
+  padding: 2rem;
   border-radius: 1rem;
   background-color: #fff;
   overflow: hidden;
   grid-template-columns: 15rem auto;
-}
-
-#mapContainer {
-  display: flex;
-  justify-content: center;
-  margin: 18px;
 }

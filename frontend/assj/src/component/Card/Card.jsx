@@ -1,15 +1,15 @@
 import React from "react";
 import "./Card.css";
 import { AnimateSharedLayout } from "framer-motion";
-import Red from "../../img/Red.png";
-import Green from "../../img/Green.png";
-import Yellow from "../../img/Yellow.png";
-import first from "../../img/first.png";
-import second from "../../img/second.png";
-import third from "../../img/third.png";
+import Red from "../../assets/img/Red.png";
+import Green from "../../assets/img/Green.png";
+import Yellow from "../../assets/img/Yellow.png";
+import first from "../../assets/img/first.png";
+import second from "../../assets/img/second.png";
+import third from "../../assets/img/third.png";
 
-import { color } from "../../React_Data/Data";
-import { formatter } from "../../React_Data/Data";
+import { color } from "../../assets/React_Data/Data";
+import { formatter } from "../../assets/React_Data/Data";
 
 const Card = ({ rankingData, setDetail }) => {
   return (

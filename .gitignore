@@ -207,3 +207,5 @@ $RECYCLE.BIN/
 
 # django
 migrations/
+
+img/
