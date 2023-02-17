@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Chart from "../Chart/DetailChart";
 import "./DetailModal.css";
-import { formatter } from "../../React_Data/Data";
+import { formatter } from "../../assets/React_Data/Data";
 
 const DetailModal = ({ open, close, detailGu, detailData, detailDataList }) => {
   // 예측가격:predictprice
@@ -209,7 +209,7 @@ function Table({ columns, tableData, infoText }) {
         </colgroup>
         <thead>
           <tr>
-            {columns.map((column) => (
+            {columns.map((column, idx) => (
               <th key={column}>{column}</th>
             ))}
           </tr>

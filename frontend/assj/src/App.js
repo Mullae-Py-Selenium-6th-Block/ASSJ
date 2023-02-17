@@ -1,12 +1,12 @@
 import "./App.css";
 import Sidebar from "./component/Sidebar/Sidebar";
 import { useEffect, useState } from "react";
-import MainDash from "./component/MainDash/MainDash";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Web from "./Pages/Web";
-import axios from "axios";
-import Modal from "./component/kakaomap/modal";
-import DetailModal from "./component/DetailModal/DetailModal";
+import { BrowserRouter } from "react-router-dom";
+import { rankingDetailInfo, rankingInfo } from "./api/ranking";
+import { getEconomicInfo } from "./api/economic";
+import { getGuInfo } from "./api/gu-info";
+import { frontUrl } from "./utils/axios";
+import Routers from "./routes/routers";
 
 function App() {
   const [selectedGu, setSelectedGu] = useState([-1, ""]); //1번 페이지 구 선택
@@ -22,9 +22,8 @@ function App() {
   const [modalOpen, setState] = useState(false); //1번페이지 모달 창 state
   const [DetailOpen, setDetailiOpenState] = useState(false); //1번페이지 모달 창 state
 
-  const [pageSide, setPageSide] = useState("http://43.201.96.246/");
   const [sideSelected, setSideSelected] = useState(
-    document.location.href === "http://43.201.96.246/" ? 0 : 1
+    document.location.href === `${frontUrl}` ? 0 : 1
   );
   const [economics, setEconomics] = useState([]);
   const openModal = () => {
@@ -41,15 +40,13 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("바뀜");
     var link = document.location.href;
-    if (link === "http://43.201.96.246/") {
+    if (link === `${frontUrl}`) {
       setSideSelected(0);
     } else {
       setSideSelected(1);
-      axios.get("http://43.201.96.246/assj/economics/").then((response) => {
-        setEconomics(response.data.data[0]);
-      });
+      getEconomicInfo().then((result) => setEconomics(result));
+      console.log(economics);
     }
   }, [document.location.href]);
 
@@ -57,83 +54,26 @@ function App() {
     if (selectedGu[0] === -1) {
       return;
     }
-    axios
-      .get("http://43.201.96.246/assj/" + String(selectedGu[0]) + "/")
-      .then((response) => {
-        setGraphData(response.data);
-        response.data.map((elem, idx) => {
-          if (idx === 119) {
-            elem.price = response.data[118].nextprice;
-          }
-        });
-        openModal();
-      });
+    getGuInfo(selectedGu[0]).then((result) => setGraphData(result));
+    openModal();
   }, [selectedGu]);
 
   useEffect(() => {
-    if (isClicked === false) {
-      axios
-        .get("http://43.201.96.246/assj/ranking/order/1/")
-        .then((response) => {
-          setRankingData(response.data?.data);
-        });
-    } else if (isClicked === true) {
-      axios
-        .get("http://43.201.96.246/assj/ranking/order/0/")
-        .then((response) => {
-          setRankingData(response.data?.data);
-        });
-    }
+    isClicked
+      ? rankingInfo(0).then((result) => setRankingData(result))
+      : rankingInfo(1).then((result) => setRankingData(result));
   }, [isClicked]);
 
   useEffect(() => {
     if (detailGu[0] === -1) {
       return;
     }
-    axios
-      .get(
-        "http://43.201.96.246/assj/ranking/" +
-          String(detailGu[0]) +
-          "/?format=json"
-      )
-      .then((response) => {
-        const price = [];
-        const totalhousenums = [];
-        const tradingvolume = [];
-        const convertrate = [];
-        const responsedata = response.data;
-        for (let i = 0; i < responsedata.length; i++) {
-          price.push({
-            x: responsedata[i].date,
-            y: responsedata[i].price,
-            y1: responsedata[i].price,
-          });
-          if (responsedata[i].totalhousenums !== null) {
-            totalhousenums.push({
-              x: responsedata[i].date,
-              y: responsedata[i].totalhousenums,
-            });
-          }
-          if (responsedata[i].tradingvolume !== null) {
-            tradingvolume.push({
-              x: responsedata[i].date,
-              y: responsedata[i].tradingvolume,
-            });
-          }
-          if (responsedata[i].tradingvolume !== null) {
-            convertrate.push({
-              x: responsedata[i].date,
-              y: responsedata[i].convertrate,
-            });
-          }
-        }
-
-        price[price.length - 1].y1 =
-          responsedata[responsedata.length - 2].nextprice;
-        setDetail(responsedata);
-        setDetailList([price, totalhousenums, tradingvolume, convertrate]);
-        openDetail();
-      });
+    console.log(detailGu[0]);
+    rankingDetailInfo(detailGu[0]).then((res) => {
+      setDetail(res[4]);
+      setDetailList([res[0], res[1], res[2], res[3]]);
+      openDetail();
+    });
   }, [detailGu]);
 
   return (
@@ -144,42 +84,24 @@ function App() {
             sideSelected={sideSelected}
             setSideSelected={setSideSelected}
           />
-          <Routes>
-            <Route
-              path="/*"
-              element={
-                <Web setSelectedGu={setSelectedGu} selectedGu={selectedGu} />
-              }
-            ></Route>
-            <Route
-              path="/rank"
-              element={
-                <MainDash
-                  economics={economics}
-                  isClicked={isClicked}
-                  setIsClicked={setIsClicked}
-                  rankingData={rankingData}
-                  detailGu={detailGu}
-                  setDetail={setDetailGu}
-                />
-              }
-            ></Route>
-          </Routes>
+          <Routers
+            selectedGu={selectedGu}
+            setSelectedGu={setSelectedGu}
+            modalOpen={modalOpen}
+            closeModal={closeModal}
+            graphData={graphData}
+            economics={economics}
+            isClicked={isClicked}
+            setIsClicked={setIsClicked}
+            rankingData={rankingData}
+            setDetailGu={setDetailGu}
+            DetailOpen={DetailOpen}
+            closeDetail={closeDetail}
+            detailGu={detailGu}
+            detailData={detailData}
+            detailDataList={detailDataList}
+          />
         </div>
-        <Modal
-          open={modalOpen}
-          close={closeModal}
-          selectedGu={selectedGu}
-          setSelectedGu={setSelectedGu}
-          graphData={graphData}
-        />
-        <DetailModal
-          open={DetailOpen}
-          close={closeDetail}
-          detailGu={detailGu}
-          detailData={detailData}
-          detailDataList={detailDataList}
-        />
       </div>
     </BrowserRouter>
   );

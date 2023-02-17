@@ -1,6 +1,6 @@
 import "./SelectButton.css";
-import React, { useState } from "react";
-import Modal from "../kakaomap/modal";
+import React from "react";
+
 const SelectButton = ({ selectedGu, setSelectedGu }) => {
   let data = [
     "강남구",

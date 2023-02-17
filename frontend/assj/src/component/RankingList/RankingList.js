@@ -1,10 +1,10 @@
 import Switch from "../Switch/Switch";
-import Red from "../../img/Red.png";
-import Green from "../../img/Green.png";
-import Yellow from "../../img/Yellow.png";
-import { color } from "../../React_Data/Data";
+import Red from "../../assets/img/Red.png";
+import Green from "../../assets/img/Green.png";
+import Yellow from "../../assets/img/Yellow.png";
+import { color } from "../../assets/React_Data/Data";
 import { AnimateSharedLayout } from "framer-motion";
-import { formatter } from "../../React_Data/Data";
+import { formatter } from "../../assets/React_Data/Data";
 import "./RankingList.css";
 
 const RankingList = ({ isClicked, setIsClicked, rankingData, setDetail }) => {

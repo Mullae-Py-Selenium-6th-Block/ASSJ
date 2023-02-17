@@ -1,15 +1,13 @@
 .top-container {
   display: flex;
-  /* width: 100%; */
+  height: 90%;
   justify-content: center;
-  margin: 0 auto;
+  margin: 2rem;
 }
 .CompactCard {
   display: flex;
-  flex-basis: 380px;
-  /* max-width: 480px; */
-  /* height: 10rem !important; */
-  height: 240px;
+  flex-basis: 330px;
+  height: 210px;
   border-radius: 0.7rem;
   color: #fff;
   position: relative;
@@ -32,7 +30,7 @@
 }
 .detail > div {
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0.3rem 0;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 800;
@@ -73,18 +71,9 @@
   justify-content: center;
   background: #d9d9d9;
   align-items: center;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 48px;
   /* identical to box height */
   border-top-left-radius: 0.7rem;
   border-top-right-radius: 0.7rem;
-
-  text-align: center;
-
-  color: #000000;
 }
 
 .rank-img {
