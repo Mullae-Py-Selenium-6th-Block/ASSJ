@@ -1,16 +1,16 @@
 import axios from "axios";
-
+import { serverEndPoint } from "../utils/axios";
 export async function rankingInfo(num) {
   console.log(num);
   const data = await axios
-    .get(`http://127.0.0.1:8000/assj/ranking/order/${num}/`)
+    .get(`${serverEndPoint}assj/ranking/order/${num}/`)
     .then((res) => res.data.data);
   return data;
 }
 
 export async function rankingDetailInfo(num) {
   const response = await axios
-    .get("http://127.0.0.1:8000/assj/ranking/" + String(num) + "/?format=json")
+    .get(`${serverEndPoint}assj/ranking/${String(num)}/?format=json`)
     .then((res) => res.data);
 
   const price = [];

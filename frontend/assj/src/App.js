@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { rankingDetailInfo, rankingInfo } from "./api/ranking";
 import { getEconomicInfo } from "./api/economic";
 import { getGuInfo } from "./api/gu-info";
+import { frontUrl } from "./utils/axios";
 import Routers from "./routes/routers";
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
   const [DetailOpen, setDetailiOpenState] = useState(false); //1번페이지 모달 창 state
 
   const [sideSelected, setSideSelected] = useState(
-    document.location.href === "http://localhost:3000/" ? 0 : 1
+    document.location.href === `${frontUrl}` ? 0 : 1
   );
   const [economics, setEconomics] = useState([]);
   const openModal = () => {
@@ -40,7 +41,7 @@ function App() {
 
   useEffect(() => {
     var link = document.location.href;
-    if (link === "http://localhost:3000/") {
+    if (link === `${frontUrl}`) {
       setSideSelected(0);
     } else {
       setSideSelected(1);
