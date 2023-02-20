@@ -21,18 +21,7 @@ const Routers = ({
 }) => {
   return (
     <Routes>
-      <Route
-        path="/*"
-        element={
-          <Main
-            selectedGu={selectedGu}
-            setSelectedGu={setSelectedGu}
-            modalOpen={modalOpen}
-            closeModal={closeModal}
-            graphData={graphData}
-          />
-        }
-      ></Route>
+      <Route path="/*" element={<Main />}></Route>
       <Route
         path="/rank"
         element={

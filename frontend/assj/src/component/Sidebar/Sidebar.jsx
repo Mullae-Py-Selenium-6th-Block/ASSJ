@@ -4,8 +4,12 @@ import "./Sidebar.css";
 import pic from "./yoon.png";
 import { SidebarData } from "../../assets/React_Data/Data";
 import { Link } from "react-router-dom";
+import { frontUrl } from "../../utils/axios";
+const Sidebar = () => {
+  const [sideSelected, setSideSelected] = useState(
+    document.location.href === `${frontUrl}` ? 0 : 1
+  );
 
-const Sidebar = ({ sideSelected }) => {
   const sideSet = (e) => {
     if (e.target.outerText === "자치구 지도") {
       window.location.href = "/";
